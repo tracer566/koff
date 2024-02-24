@@ -238,7 +238,7 @@
 </section>
 <!-- /.goods -->
 
-<section class="product">
+<section class="product" >
 <div class="container">
 <h2 class="product__title">Кресло с подлокотниками</h2>
 
@@ -331,7 +331,6 @@
 
 <div class="product__characteristics">
 <h3 class="product__characteristics-title">Общие характеристики</h3>
-</div>
 
 <table class="product__characteristics-table table">
 <tr class="table__row">
@@ -360,6 +359,10 @@
 </tr>
 </table>
 
+</div>
+
+
+
 <div class="product__btns">
 <button class="product__btn" type="button">В корзину</button>
 <button class="product__like" type="button">
@@ -376,6 +379,161 @@
 <!-- /.container -->
 </section>
 <!-- /.product -->
+
+<section class="cart">
+<div class="container cart__container">
+  <h2 class="cart__title">Корзина</h2>
+  <ul class="cart__products">
+    <li class="cart__product">
+      <img class="cart__img" src="./img/photo.jpg" alt="Кресло с подлокотниками">
+      <h3 class="cart__title-product">Кресло с подлокотниками</h3>
+      <p class="cart__price">5&nbsp;000&nbsp;₽</p>
+      <p class="cart__article">арт. 84348945757</p>
+      <div class="cart__product-control">
+        <button class="cart__product-btn">-</button>
+        <p class="cart__product-count">1</p>
+        <button class="cart__product-btn">+</button>
+      </div>
+    </li>
+    <!-- /.cart__product -->
+    <li class="cart__product">
+      <img class="cart__img" src="./img/photo.jpg" alt="Кресло с подлокотниками">
+      <h3 class="cart__title-product">Кресло с подлокотниками</h3>
+      <p class="cart__price">10&nbsp;000&nbsp;₽</p>
+      <p class="cart__article">арт. 84348945757</p>
+      <div class="cart__product-control">
+        <button class="cart__product-btn">-</button>
+        <p class="cart__product-count">2</p>
+        <button class="cart__product-btn">+</button>
+      </div>
+    </li>
+    <!-- /.cart__product -->
+    <li class="cart__product">
+      <img class="cart__img" src="./img/photo.jpg" alt="Кресло с подлокотниками">
+      <h3 class="cart__title-product">Кресло с подлокотниками</h3>
+      <p class="cart__price">5&nbsp;000&nbsp;₽</p>
+      <p class="cart__article">арт. 84348945757</p>
+      <div class="cart__product-control">
+        <button class="cart__product-btn">-</button>
+        <p class="cart__product-count">1</p>
+        <button class="cart__product-btn">+</button>
+      </div>
+    </li>
+    <!-- /.cart__product -->
+  </ul>
+  <!-- /.cart__products -->
+
+  <div class="cart__place">
+    <h3 class="cart__subtitle">Оформление</h3>
+    <div class="cart__place-info">
+      <p class="cart__place-count">4 товара на сумму:</p>
+      <p class="cart__place-price">20&nbsp;000&nbsp;₽</p>
+    </div>
+    <p class="cart__place-delivery">Доставка 0 ₽</p>
+    <button class="cart__place-btn" type="submit" form="order">Оформить заказ</button>
+  </div>
+  <!-- /.cart__place -->
+
+  <form class="cart__form form-order" id="order" action="#" method="post">
+    <h3 class="cart__subtitle">Данные для доставки</h3>
+
+    <fieldset class="form-order__fieldset form-order__fieldset_input">
+      <input class="form-order__input" placeholder="Фамилия Имя Отчество" type="text" name="name">
+      <input class="form-order__input" placeholder="Телефон" type="tel" name="phone">
+      <input class="form-order__input" placeholder="E-mail" type="email" name="email">
+      <input class="form-order__input" placeholder="Адрес доставки" type="text" name="address">
+
+      <textarea class="form-order__textarea" name="comments" placeholder="Комментарий к заказу">
+
+      </textarea>
+    </fieldset>
+    <!-- /.form-order__fieldset -->
+    <fieldset class="form-order__fieldset form-order__fieldset_radio">
+      <legend class="form-order__legend">Доставка</legend>
+      <label class="form-order__label radio">
+        <input class="radio__input" type="radio" name="deliveryType" value="delivery">
+        Доставка
+      </label>
+
+      <label class="form-order__label radio">
+        <input class="radio__input" type="radio" name="deliveryType" value="pickup">
+        Самовывоз
+      </label>
+    </fieldset>
+    <!-- /.form-order__fieldset -->
+      <fieldset class="form-order__fieldset form-order__fieldset_radio">
+      <legend class="form-order__legend">Оплата</legend>
+      <label class="form-order__label radio">
+        <input class="radio__input" type="radio" name="paymentType" value="card">
+        Картой при получении
+      </label>
+
+      <label class="form-order__label radio">
+        <input class="radio__input" type="radio" name="paymentyType" value="cash">
+        Наличными при получении
+      </label>
+    </fieldset>
+    <!-- /.form-order__fieldset -->
+
+  </form>
+  <!-- /#order.cart__form form-order -->
+
+
+</div>
+<!-- /.container cart__container -->
+</section>
+<!-- /.cart -->
+
+<section class="order">
+  <div class="container order__container">
+    <div class="order__info">
+<div class="order__head">
+  <h2 class="order__title">Заказ успешно размещен</h2>      
+<p class="order__price">20&nbsp;000&nbsp;₽</p>
+</div>
+<!-- order__head -->
+<p class="order__number">№43435</p>
+
+<div class="order__data">
+  <h3 class="order__data-title">Общие характеристики</h3>
+<table class="order__data-table table">
+<tr class="table__row">
+<td class="table__field">Получатель</td>
+<td class="table__value">Иванов Петр Александрович</td>
+</tr>
+<tr class="table__row">
+<td class="table__field">Телефон</td>
+<td class="table__value">+7 (737) 346 23 00</td>
+</tr>
+<tr class="table__row">
+<td class="table__field">E-mail</td>
+<td class="table__value">Ivanov84@gmail.com</td>
+</tr>
+<tr class="table__row">
+<td class="table__field">Адрес доставки</td>
+<td class="table__value">Москва, ул. Ленина, 21, кв. 33</td>
+</tr>
+<tr class="table__row">
+<td class="table__field">Способ оплаты</td>
+<td class="table__value">Картой при получении</td>
+</tr>
+<tr class="table__row">
+<td class="table__field">Способ получения</td>
+<td class="table__value">Доставка</td>
+</tr>
+</table>
+</div>
+<!-- /.order__data-table -->
+
+<button class="order__btn" type="button">На главную</button>
+
+</div>
+<!-- /.order__info -->
+  </div>
+  <!-- /.container order__container -->
+</section>
+<!-- /.order -->
+
 </main>
 <!-- /.main -->
 
