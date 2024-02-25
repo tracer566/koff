@@ -1,8 +1,37 @@
 .goods {
+  padding-top: 24px;
 
-  &__title {}
+  // padding-bottom: 32px;
+  @media(min-width: 580px) {
+    padding-top: 32px;
+  }
 
-  &__list {}
+  @media(min-width: 820px) {
+    padding-top: 40px;
+  }
+
+  &__title {
+    font-weight: bold;
+    font-size: 24px;
+
+    @media(min-width: 580px) {
+      font-size: 32px;
+    }
+  }
+
+  &__list {
+    padding-top: 24px;
+    display: grid;
+    column-gap: 8px;
+    row-gap: 50px;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-around;
+
+    // padding-bottom: 24px;
+    @media(min-width:820px) {
+      padding-top: 40px;
+    }
+  }
 
   &__item {}
 

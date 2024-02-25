@@ -1,10 +1,71 @@
 .catalog {
+  overflow: hidden;
+  padding-top: 24px;
 
-  &__container {}
+  @media(min-width: 580px) {
+    padding-top: 32px;
+  }
 
-  &__list {}
+  @media(min-width: 820px) {
+    padding-top: 40px;
+  }
 
-  &__item {}
+  &__container {
+    padding: 0;
+  }
 
-  &__link {}
+  &__list {
+    overflow-x: auto;
+    padding: 0 16px;
+    display: flex;
+    gap: 4px;
+
+    @media(min-width: 580px) {
+      padding: 0 29px;
+    }
+
+    @media(min-width: 820px) {
+      padding: 0 43px;
+    }
+
+    @media(min-width: 1120px) {
+      padding: 0 92px;
+    }
+
+  }
+
+  &__item {
+    cursor: pointer;
+  }
+
+  &__link {
+    background-color: #EEEFF2;
+    padding: 12px 14px;
+    border-radius: 32px;
+    color: #969EAE;
+    display: block;
+    outline: none;
+    border: 1px solid transparent;
+    transition: border-color 0.4s ease, background-color 0.4s ease;
+
+    &:hover,
+    &:focus-visible {
+      background-color: transparent;
+      border-color: #780096;
+      color: #780096
+    }
+
+    &:active,
+    &_active {
+      background-color: #780096;
+      border-color: #780096;
+      color: #fff;
+    }
+
+    &_active {
+      pointer-events: none;
+    }
+  }
+
+
 }

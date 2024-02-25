@@ -1,10 +1,23 @@
 .breadcrumb {
+  padding-top: 20px;
 
-  &__list {}
+  @media(min-width:820px) {
+    padding-top: 24px;
+  }
 
-  &__item {}
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 
-  &__link {}
+  &__item {
+    cursor: pointer;
+  }
 
-  &__separator {}
+  &__link {
+    color: #969EAE;
+  }
+
+  // &__separator {}
 }
