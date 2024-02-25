@@ -1,0 +1,56 @@
+.header {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #EEEFF2;
+
+  &__container {
+    display: grid;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    grid-template-areas:
+      "logo control"
+      "search search";
+
+    @media(min-width: 820px) {
+      grid-template-areas: "logo search control";
+      grid-template-columns: 94px 1fr auto;
+    }
+  }
+
+  &__link-logo {
+    grid-area: logo;
+  }
+
+  &__logo {
+    width: 94px;
+  }
+
+  &__search {
+    grid-area: search;
+    position: relative;
+  }
+
+  &__input {}
+
+  &__btn {}
+
+  &__control {
+    display: flex;
+    gap: 16px;
+    grid-area: control;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  &__link-text {
+    display: none;
+  }
+
+  &__count {}
+
+}
