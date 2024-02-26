@@ -24,8 +24,21 @@
     display: grid;
     column-gap: 8px;
     row-gap: 50px;
-    grid-template-columns: 1fr 1fr;
+    // grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     justify-content: space-around;
+
+    @media(min-width:580px) {
+      column-gap: 10px;
+      row-gap: 65px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    }
+
+    @media(min-width:820px) {
+      column-gap: 16px;
+      row-gap: 80px;
+      grid-template-columns: repeat(auto-fit, minmax(302px, 1fr));
+    }
 
     // padding-bottom: 24px;
     @media(min-width:820px) {
@@ -33,7 +46,7 @@
     }
   }
 
-  &__item {}
+  // &__item {}
 
-  &__card {}
+  // &__card {}
 }

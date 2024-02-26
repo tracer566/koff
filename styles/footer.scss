@@ -1,6 +1,17 @@
 .footer {
+  background-color: #1C1C1C;
+  color: #fff;
+  // display: flex;
 
-  &__container {}
+  &__container {
+    display: flex;
+    flex-direction: column;
+
+    @media(min-width:820px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
 
   &__logo {}
 
