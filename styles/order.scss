@@ -1,6 +1,10 @@
 .order {
 
-  &__container {}
+  &__container {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+  }
 
   &__info {}
 
