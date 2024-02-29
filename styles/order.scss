@@ -1,26 +1,79 @@
 .order {
 
   &__container {
-    display: grid;
+    display: flex;
     align-items: center;
     justify-content: center;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 56px;
+
+    @media(min-width:580px) {}
+
+    @media(min-width:820px) {}
+
+    @media(min-width:1120px) {
+      padding-top: 120px;
+      padding-bottom: 60px;
+    }
+
   }
 
-  &__info {}
+  &__info {
+    width: 408px;
+    max-width: 100%;
+  }
 
-  &__head {}
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
 
-  &__title {}
+  &__title {
+    font-size: 20px;
+  }
 
-  &__price {}
+  &__price {
+    font-size: 20px;
+  }
 
-  &__number {}
+  &__number {
+    margin-bottom: 24px;
+  }
 
-  &__data {}
+  // &__data {}
 
-  &__data-title {}
+  &__data-title {
+    margin-bottom: 12px;
+    font-size: 16px;
+  }
 
-  &__data-table {}
+  &__data-table {
+    margin-bottom: 24px;
+  }
 
-  &__btn {}
+  &__btn {
+    color: #fff;
+    text-align: center;
+    display: block;
+    width: 100%;
+    padding: 12px 24px;
+    background-color: #780096;
+    border: 1px solid #780096;
+    border-radius: 32px;
+    transition: background-color .3s ease-in-out, color .3s ease-in-out;
+
+
+    &:hover,
+    &:active {
+      color: #780096;
+      background-color: transparent;
+    }
+
+    &:focus-visible {
+      border: 1px solid #CC00FF;
+    }
+  }
 }
