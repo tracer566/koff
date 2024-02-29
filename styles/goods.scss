@@ -27,12 +27,17 @@
     // grid-template-columns: 1fr 1fr;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     justify-content: space-around;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     @media(min-width:580px) {
       column-gap: 10px;
       row-gap: 65px;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      margin-bottom: 40px;
     }
 
     @media(min-width:820px) {

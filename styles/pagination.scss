@@ -23,6 +23,7 @@
       // ширина зависит от первого числа в переменной pagination__bar
       width: var(--width);
       height: 100%;
+      transition: width 0.35s ease-in-out
     }
   }
 
