@@ -27,6 +27,7 @@
     // grid-template-columns: 1fr 1fr;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     justify-content: space-around;
+    margin-bottom: 40px;
 
     @media(min-width:580px) {
       column-gap: 10px;

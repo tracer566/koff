@@ -1,0 +1,48 @@
+.pagination {
+  width: 200px;
+  margin: 0 auto;
+
+  &__bar {
+    height: 6px;
+    border-radius: 32px;
+    background-color: #EEEFF2;
+    width: 100%;
+    margin-bottom: 16px;
+    position: relative;
+    // z-index: -1;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      border-radius: 32px;
+      background-color: #780096;
+      // width: 80px;
+      // ширина зависит от первого числа в переменной pagination__bar
+      width: var(--width);
+      height: 100%;
+    }
+  }
+
+  &__arrows {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    gap: 8px;
+
+    & p {
+      padding-top: 2px;
+    }
+  }
+
+  &__left {}
+
+  &__current {}
+
+  &__total {}
+
+  &__right {}
+}
