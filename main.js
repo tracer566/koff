@@ -46,6 +46,36 @@ const init = () => {
   productSlider();
 
   const router = new Navigo('/', { linksSelector: 'a[href^="/"]' });
+
+  router
+    .on("/", () => {
+      console.log('На главной');
+    })
+    .on("/category", (obj) => {
+      console.log('obj category: ', obj);
+      console.log('category');
+    })
+    .on("/favorite", () => {
+      console.log('favorite');
+    })
+    .on("/search", () => {
+      console.log('search');
+    })
+    .on("/product/:id", (obj) => {
+      console.log('product obj: ', obj);
+    })
+    .on("/cart", () => {
+      console.log('cart');
+    })
+    .on("/order", () => {
+      console.log('order');
+    })
+    .notFound(() => {
+      // console.log(404);
+      document.body.innerHTML = '<h2 style="text-align:center;position:absolute;top:48%;left:50%;transform:translateX(-50%)">Страница не найдена:(</h2>'
+    });
+
+  router.resolve();
 };
 
 init();
