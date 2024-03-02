@@ -44,37 +44,30 @@ const productSlider = () => {
 
 const init = () => {
   productSlider();
-  const params = window.location.href;
-  console.log('params: ', params);
 
-  const links = document.querySelectorAll('a');
-  for (let i = 0; i < links.length; i++) {
-    console.log('links[i].href', links[i].href);
-  }
-
-  const router = new Navigo(`${params}`, { linksSelector: `a[href^="${params}"]` });
+  const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
 
   router
-    .on(`${params}`, () => {
+    .on(`/`, () => {
       console.log('На главной');
     })
-    .on(`${params}`, (obj) => {
+    .on(`/`, (obj) => {
       console.log('obj category: ', obj);
       console.log('category');
     })
-    .on(`${params}`, () => {
+    .on(`/favorite`, () => {
       console.log('favorite');
     })
-    .on(`${params}`, () => {
+    .on(`/search`, () => {
       console.log('search');
     })
-    .on(`${params}`, (obj) => {
+    .on(`/product:id`, (obj) => {
       console.log('product obj: ', obj);
     })
-    .on(`${params}`, () => {
+    .on(`/cart`, () => {
       console.log('cart');
     })
-    .on(`${params}`, () => {
+    .on(`/order`, () => {
       console.log('order');
     })
     .notFound(() => {

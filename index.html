@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+  <base href="/koff/dist/">
 <meta charset="UTF-8" />
-<!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Koff - интернет магазин мебели</title>
 
-<!-- путь для модулей в гите viteFileDeps ./koff/dist/assets/ -->
+<!---- путь для модулей в гите viteFileDeps ./koff/dist/assets/ ---->
  
 <link rel="preload" href="/fonts/open-sans-v36-cyrillic_latin-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/open-sans-v36-cyrillic_latin-700.woff2" as="font" type="font/woff2" crossorigin>
@@ -33,7 +33,6 @@
 </svg>
 </button>
 </form>
-<!-- /.header__search -->
 
 <div class="header__control">
 <a class="header__link" href="/favorite">
@@ -56,12 +55,9 @@
 </svg>
 </a>
 </div>
-<!-- /.header__control-link,cart,favorite-->
 
 </div>
-<!-- /.container -->
 </header>
-<!-- /.header -->
 
 <main class="main">
 <div class="catalog">
@@ -98,11 +94,8 @@
 <a class="catalog__link" href="/category?slug=Стеллажи">Стеллажи</a>
 </li>
 </ul>
-<!-- /.catalog__list -->
 </div>
-<!-- /.container catalog__container -->
 </div>
-<!-- /.catalog -->
 
 <div class="breadcrumb">
 <div class="container">
@@ -111,22 +104,17 @@
 <a class="breadcrumb__link" href="/">Главная</a>
 <span class="breadcrumb__separator">&gt;</span>
 </li>
-<!-- breadcrumb__item" -->
 <li class="breadcrumb__item">
 <a class="breadcrumb__link" href="/category?slug=Кресла">Кресла</a>
 <span class="breadcrumb__separator">&gt;</span>
 </li>
-<!-- breadcrumb__item" -->
 <li class="breadcrumb__item">
 <a class="breadcrumb__link">Кресло с подлокотниками</a>
 <span class="breadcrumb__separator">&gt;</span>
 </li>
-<!-- breadcrumb__item" -->
 </ul>
-<!-- breadcrumb__list -->
 </div>
 </div>
-<!-- /.breadcrumb -->
 
 <section class="goods">
 <div class="container">
@@ -156,9 +144,7 @@
 </button>
 
 </article>
-<!-- /.product -->
 </li>
-<!-- /.goods__item -->
 <li class="goods__item">
 <article class="goods__card card">
 <a class="card__link card__link_img" href="/product/321">
@@ -182,9 +168,7 @@
 </button>
 
 </article>
-<!-- /.product -->
 </li>
-<!-- /.goods__item -->
 <li class="goods__item">
 <article class="goods__card card">
 <a class="card__link card__link_img" href="/product/456">
@@ -208,9 +192,7 @@
 </button>
 
 </article>
-<!-- /.product -->
 </li>
-<!-- /.goods__item -->
 <li class="goods__item">
 <article class="goods__card card">
 <a class="card__link card__link_img" href="/product/654">
@@ -234,9 +216,7 @@
 </button>
 
 </article>
-<!-- /.product -->
 </li>
-<!-- /.goods__item -->
 <li class="goods__item">
 <article class="goods__card card">
 <a class="card__link card__link_img" href="/product/789">
@@ -260,9 +240,7 @@
 </button>
 
 </article>
-<!-- /.product -->
 </li>
-<!-- /.goods__item -->
 <li class="goods__item">
 <article class="goods__card card">
 <a class="card__link card__link_img" href="/product/987">
@@ -286,11 +264,8 @@
 </button>
 
 </article>
-<!-- /.product -->
 </li>
-<!-- /.goods__item -->
 </ul>
-<!-- /.goods__list -->
 <div class="pagination">
   <div class="pagination__bar" style="--width:calc(12 / 31 * 100%)"></div>
   <div class="pagination__arrows">
@@ -312,11 +287,8 @@
     </button>
   </div>
 </div>
-<!-- /.pagination -->
 </div>
-<!-- /.container -->
 </section>
-<!-- /.goods -->
 
 <section class="product">
 <div class="container product__container">
@@ -367,7 +339,6 @@
 </button>
 
 </div>
-<!-- swiper2 -->
 
 <div class="swiper product__slider-thumbnails">
 <div class="swiper-wrapper product__thumbnails-list">
@@ -400,10 +371,8 @@
 </div>
 </div>
 </div>
-<!-- swiper thumbs -->
 
 </div>
-<!-- /.product__picture sliders -->
 
 <div class="product__info">
 <p class="product__price">5&nbsp;000&nbsp;₽</p>
@@ -453,12 +422,9 @@
 </button>
 </div>
 </div>
-<!-- /.product__info -->
 
 </div>
-<!-- /.container -->
 </section>
-<!-- /.product -->
 
 <section class="cart">
 <div class="container cart__container">
@@ -475,7 +441,6 @@
         <button class="cart__product-btn">+</button>
       </div>
     </li>
-    <!-- /.cart__product -->
     <li class="cart__product">
       <img class="cart__img" src="./img/photo.jpg" alt="Кресло с подлокотниками">
       <h3 class="cart__title-product">Кресло с подлокотниками</h3>
@@ -487,7 +452,6 @@
         <button class="cart__product-btn">+</button>
       </div>
     </li>
-    <!-- /.cart__product -->
     <li class="cart__product">
       <img class="cart__img" src="./img/photo.jpg" alt="Кресло с подлокотниками">
       <h3 class="cart__title-product">Кресло с подлокотниками</h3>
@@ -499,9 +463,7 @@
         <button class="cart__product-btn">+</button>
       </div>
     </li>
-    <!-- /.cart__product -->
   </ul>
-  <!-- /.cart__products -->
 
   <div class="cart__place">
     <h3 class="cart__subtitle">Оформление</h3>
@@ -512,7 +474,6 @@
     <p class="cart__place-delivery">Доставка 0 ₽</p>
     <button class="cart__place-btn" type="submit" form="order">Оформить заказ</button>
   </div>
-  <!-- /.cart__place -->
 
   <form class="cart__form form-order" id="order" action="#" method="post">
     <h3 class="cart__subtitle cart__subtitle_form-order">Данные для доставки</h3>
@@ -527,7 +488,6 @@
 
       </textarea>
     </fieldset>
-    <!-- /.form-order__fieldset -->
     <fieldset class="form-order__fieldset form-order__fieldset_radio">
       <legend class="form-order__legend">Доставка</legend>
       <label class="form-order__label radio">
@@ -540,7 +500,6 @@
         Самовывоз
       </label>
     </fieldset>
-    <!-- /.form-order__fieldset -->
       <fieldset class="form-order__fieldset form-order__fieldset_radio">
       <legend class="form-order__legend">Оплата</legend>
       <label class="form-order__label radio">
@@ -553,16 +512,12 @@
         Наличными при получении
       </label>
     </fieldset>
-    <!-- /.form-order__fieldset -->
 
   </form>
-  <!-- /#order.cart__form form-order -->
 
 
 </div>
-<!-- /.container cart__container -->
 </section>
-<!-- /.cart -->
 
 <section class="order">
   <div class="container order__container">
@@ -571,7 +526,6 @@
   <h2 class="order__title">Заказ успешно размещен</h2>      
 <p class="order__price">20&nbsp;000&nbsp;₽</p>
 </div>
-<!-- order__head -->
 <p class="order__number">№43435</p>
 
 <div class="order__data">
@@ -603,19 +557,14 @@
 </tr>
 </table>
 </div>
-<!-- /.order__data-table -->
 
 <button class="order__btn" type="button">На главную</button>
 
 </div>
-<!-- /.order__info -->
   </div>
-  <!-- /.container order__container -->
 </section>
-<!-- /.order -->
 
 </main>
-<!-- /.main -->
 
 
 <footer class="footer">
@@ -623,7 +572,6 @@
 <a class="footer-link__logo" href="/">
 <img class="footer__logo" src="./img/logo.svg" alt="Логотип мебельного магазина koff в подвале сайта">
 </a>
-<!-- /.footer-link__logo -->
 
 <div class="footer__contacts contacts">
 <a class="contacts__phone" href="tel:+79398391297">
@@ -658,7 +606,6 @@
 </ul>
 
 </div>
-<!-- /.footer__contacts contacts -->
 
 <ul class="footer__developer-list">
 <li class="footer__developer-item">Designer:
@@ -666,23 +613,12 @@
 <li class="footer__developer-item">Developer:
 <a class="footer__developer-link" target="_blank" href="https://t.me/tracer355">@tracer355</a></li>
 </ul>
-<!-- /.footer__developer-list -->
 
 <p class="footer__copyright">© Koff, 2024</p>
 </div>
-<!-- /.container -->
 </footer>
-<!-- /.footer -->
 
-<!-- <script>
-  let url_plus = window.location.search;
-  console.log('url_plus: ', url_plus);
-  var links = document.getElementsByTagName('a');
-  for(let i = 0;i<links.length;i++){
-    var link = links[i];
-    link.href = link.href + url_plus;
-  }
-</script> -->
+
 
 </body>
 </html>
