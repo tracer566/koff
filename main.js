@@ -44,7 +44,7 @@ const productSlider = () => {
 
 const init = () => {
   productSlider();
-  const params = window.location.search;
+  const params = window.location.href;
   console.log('params: ', params);
 
   const links = document.querySelectorAll('a');
@@ -52,33 +52,33 @@ const init = () => {
     console.log('links[i].href', links[i].href);
   }
 
-  const router = new Navigo('/', { linksSelector: 'a[href^="/"]' });
+  const router = new Navigo(`${params}`, { linksSelector: `a[href^="${params}"]` });
 
   router
-    .on("/", () => {
+    .on(`${params}`, () => {
       console.log('На главной');
     })
-    .on("/category", (obj) => {
+    .on(`${params}category`, (obj) => {
       console.log('obj category: ', obj);
       console.log('category');
     })
-    .on("/favorite", () => {
+    .on(`${params}favorite`, () => {
       console.log('favorite');
     })
-    .on("/search", () => {
+    .on(`${params}search`, () => {
       console.log('search');
     })
-    .on("/product/:id", (obj) => {
+    .on(`${params}product:id`, (obj) => {
       console.log('product obj: ', obj);
     })
-    .on("/cart", () => {
+    .on(`${params}cart`, () => {
       console.log('cart');
     })
-    .on("/order", () => {
+    .on(`${params}order`, () => {
       console.log('order');
     })
     .notFound(() => {
-      // console.log(4045);
+      console.log(4045);
       // document.body.innerHTML = '<h2 style="text-align:center;position:absolute;top:48%;left:50%;transform:translateX(-50%)">Страница не найдена:(</h2>'
     });
 
