@@ -71,8 +71,8 @@ const init = () => {
       console.log('order');
     })
     .notFound(() => {
-      // console.log(404);
-      document.body.innerHTML = '<h2 style="text-align:center;position:absolute;top:48%;left:50%;transform:translateX(-50%)">Страница не найдена:(</h2>'
+      // console.log(4045);
+      // document.body.innerHTML = '<h2 style="text-align:center;position:absolute;top:48%;left:50%;transform:translateX(-50%)">Страница не найдена:(</h2>'
     });
 
   router.resolve();
