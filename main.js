@@ -44,6 +44,13 @@ const productSlider = () => {
 
 const init = () => {
   productSlider();
+  const params = window.location.search;
+  console.log('params: ', params);
+
+  const links = document.querySelectorAll('a');
+  for (let i = 0; i < links.length; i++) {
+    console.log('links[i].href', links[i].href);
+  }
 
   const router = new Navigo('/', { linksSelector: 'a[href^="/"]' });
 
