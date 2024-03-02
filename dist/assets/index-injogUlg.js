@@ -6,4 +6,4 @@ function __vite__mapDeps(indexes) {
   return indexes.map((i) => __vite__mapDeps.viteFileDeps[i])
 }
 
-console.log('коммит 10');
+console.log('коммит 11');
