@@ -5,3 +5,5 @@ function __vite__mapDeps(indexes) {
   }
   return indexes.map((i) => __vite__mapDeps.viteFileDeps[i])
 }
+
+console.log('Коммит 1')
