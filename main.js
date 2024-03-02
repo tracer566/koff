@@ -58,23 +58,23 @@ const init = () => {
     .on(`${params}`, () => {
       console.log('На главной');
     })
-    .on(`${params}category`, (obj) => {
+    .on(`${params}`, (obj) => {
       console.log('obj category: ', obj);
       console.log('category');
     })
-    .on(`${params}favorite`, () => {
+    .on(`${params}`, () => {
       console.log('favorite');
     })
-    .on(`${params}search`, () => {
+    .on(`${params}`, () => {
       console.log('search');
     })
-    .on(`${params}product:id`, (obj) => {
+    .on(`${params}`, (obj) => {
       console.log('product obj: ', obj);
     })
-    .on(`${params}cart`, () => {
+    .on(`${params}`, () => {
       console.log('cart');
     })
-    .on(`${params}order`, () => {
+    .on(`${params}`, () => {
       console.log('order');
     })
     .notFound(() => {
