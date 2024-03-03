@@ -1,6 +1,11 @@
 import 'normalize.css';
 import './style.scss';
 import Navigo from 'navigo';
+import { Header } from './modules/Header/Header.js';
+import { Main } from './modules/Main/Main.js';
+import { Footer } from './modules/Footer/Footer.js';
+import { Order } from './modules/Order/Order.js';
+
 // import Swiper JS
 // import { Navigation, Thumbs } from 'swiper/modules'
 // import Swiper from 'swiper';
@@ -45,7 +50,13 @@ const productSlider = () => {
 const init = () => {
   productSlider();
 
-  const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
+  new Header().mount();
+  new Main().mount();
+  new Footer().mount();
+
+
+  //при заливке на гитхаб new Navigo(`/koff/dist`)
+  const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
 
   router
     .on(`/`, () => {
@@ -68,7 +79,7 @@ const init = () => {
       console.log('cart');
     })
     .on(`/order`, () => {
-      console.log('order');
+      new Order().mount();
     })
     .notFound(() => {
       console.log(4045);
