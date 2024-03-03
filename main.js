@@ -51,7 +51,7 @@ const init = () => {
     .on(`/`, () => {
       console.log('На главной');
     })
-    .on(`/`, (obj) => {
+    .on(`/category`, (obj) => {
       console.log('obj category: ', obj);
       console.log('category');
     })
@@ -61,7 +61,7 @@ const init = () => {
     .on(`/search`, () => {
       console.log('search');
     })
-    .on(`/product:id`, (obj) => {
+    .on(`/product/:id`, (obj) => {
       console.log('product obj: ', obj);
     })
     .on(`/cart`, () => {
