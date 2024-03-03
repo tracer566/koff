@@ -45,7 +45,7 @@ const productSlider = () => {
 const init = () => {
   productSlider();
 
-  const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
+  const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
 
   router
     .on(`/`, () => {
