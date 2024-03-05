@@ -94,7 +94,7 @@ export class Header {
 
     const favoriteLink = document.createElement('a');
     favoriteLink.classList.add('header__link');
-    favoriteLink.href = '/favorite"';
+    favoriteLink.href = '/favorite';
     favoriteLink.innerHTML = `
     <span class="header__link-text">Избранное</span>
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

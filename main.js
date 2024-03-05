@@ -5,6 +5,7 @@ import { Header } from './modules/Header/Header.js';
 import { Main } from './modules/Main/Main.js';
 import { Footer } from './modules/Footer/Footer.js';
 import { Order } from './modules/Order/Order.js';
+import { ProductList } from './modules/ProductList/ProductList';
 
 // import Swiper JS
 // import { Navigation, Thumbs } from 'swiper/modules'
@@ -47,12 +48,16 @@ const productSlider = () => {
 
 };
 
+// инициализация
 const init = () => {
   productSlider();
 
   new Header().mount();
   new Main().mount();
   new Footer().mount();
+
+  const newTest = new Main();
+  console.log('newTest: ', newTest);
 
 
   //при заливке на гитхаб new Navigo(`/koff/dist`)
@@ -61,6 +66,24 @@ const init = () => {
   router
     .on(`/`, () => {
       console.log('На главной');
+      new ProductList().mount(new Main().element, [1, 2, 3, 4, 5, 6, 7, 8, 9], 'Избранное');
+    }, {
+      // before(done, match) {
+      //   console.log('match: ', match);
+      //   console.log('before:');
+      //   done()
+      // },
+      // after(match) {
+      //   console.log('after:');
+      // },
+      leave(done, match) {
+        console.log('leave:');
+        done()
+      },
+      already(match) {
+        console.log('already:');
+
+      },
     })
     .on(`/category`, (obj) => {
       console.log('obj category: ', obj);
@@ -82,7 +105,7 @@ const init = () => {
       new Order().mount();
     })
     .notFound(() => {
-      console.log(4045);
+      console.log('Ошибка 404');
       // document.body.innerHTML = '<h2 style="text-align:center;position:absolute;top:48%;left:50%;transform:translateX(-50%)">Страница не найдена:(</h2>'
     });
 
