@@ -4,6 +4,8 @@ export const addContainer = (parent, className) => {
   if (className) {
     container.classList.add(className);
   }
+
+  // вставляю container в this.element = parent
   parent.append(container);
 
   return container;

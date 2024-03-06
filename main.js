@@ -66,7 +66,7 @@ const init = () => {
   router
     .on(`/`, () => {
       console.log('На главной');
-      new ProductList().mount(new Main().element, [1, 2, 3, 4, 5, 6, 7, 8, 9], 'Избранное');
+      new ProductList().mount(new Main().element, [1, 2, 3, 4, 5, 6, 7, 8, 9], 'Список всех товаров');
     }, {
       // before(done, match) {
       //   console.log('match: ', match);
@@ -88,9 +88,24 @@ const init = () => {
     .on(`/category`, (obj) => {
       console.log('obj category: ', obj);
       console.log('category');
+      console.log('На главной');
+      new ProductList().mount(new Main().element, [10, 11, 12, 22, 33, 44, 55], 'Категории');
+    }, {
+      leave(done, match) {
+        console.log('leave:');
+        done()
+      },
     })
-    .on(`/favorite`, () => {
+    .on(`/favorite`, (obj) => {
+      console.log('obj favorite: ', obj);
       console.log('favorite');
+      console.log('На главной');
+      new ProductList().mount(new Main().element, [11, 343, 567, 876], 'Избранное');
+    }, {
+      leave(done, match) {
+        console.log('leave:');
+        done()
+      },
     })
     .on(`/search`, () => {
       console.log('search');
@@ -106,8 +121,31 @@ const init = () => {
     })
     .notFound(() => {
       console.log('Ошибка 404');
-      // document.body.innerHTML = '<h2 style="text-align:center;position:absolute;top:48%;left:50%;transform:translateX(-50%)">Страница не найдена:(</h2>'
-    });
+      // document.querySelector('.main').innerHTML = `
+      // '<h2 style="text-align:center;position:relative;padding:100px;left:50%;
+      // transform:translateX(-50%)">Страница не найдена:(</h2>'
+      // `;
+      new Main().element.innerHTML = `
+      <div class="content" style="text-align:center;position:relative;left:50%;
+      transform:translateX(-50%);padding:100px;height:500px;">
+      <h2 style="font-size:22px;margin-bottom:10px;">Страница не найдена:(</h2>
+      <p style="font-size:18px;">Вы будете перенаправлены на <a href="/">главную страницу </a></p>
+     <img src="#" alt="#"> 
+            </div>
+      `;
+
+      setTimeout(() => {
+        router.navigate('/')
+      }, 8e3);
+
+
+    },
+      {
+        leave(done, match) {
+          new Main().element.innerHTML = '';
+          done()
+        },
+      });
 
   router.resolve();
 };
