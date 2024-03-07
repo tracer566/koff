@@ -11,7 +11,7 @@ export class ProductList {
       this.element = document.createElement('section');
       this.element.classList.add('goods');
       this.containerElement = addContainer(this.element, 'goods__container');
-      console.log('this.containerElement ProductList', this.containerElement);
+      // console.log('this.containerElement ProductList', this.containerElement);
 
       // проверка
       this.isMounted = false;
@@ -56,7 +56,7 @@ export class ProductList {
   addEvents() {
 
   };
-  updateListElem(data = [1, 2, 3, 4, 5, 6]) {
+  updateListElem(data = []) {
     // обертка карточек
     const listElem = document.createElement('ul');
     listElem.classList.add('goods__list');
@@ -85,13 +85,15 @@ export class ProductList {
         <img class="card__img" src="${API_URL}${image}" alt="${title}">
         </a>
 
+        <div class="card__info">
         <h3 class="card__title">
         <a class="card__link" href="/product/${id}">
         ${title}
         </a>
         </h3>
-
         <p class="card__price">${price.toLocaleString()}&nbsp;₽</p>
+        </div>
+        
         <button class="card__btn" data-id="${id}" type="button">В корзину</button>
 
         <button class="card__favorite" data-id="${id}">

@@ -46,6 +46,8 @@
     color: #969EAE;
     display: block;
     outline: none;
+    width: max-content; //ширина по контенту
+    white-space: nowrap; //запрещает переносы
     border: 1px solid transparent;
     transition: border-color 0.4s ease, background-color 0.4s ease;
 

@@ -26,7 +26,7 @@
     row-gap: 50px;
     // grid-template-columns: 1fr 1fr;
     grid-template-columns: repeat(auto-fit, minmax(140px, 140px));
-    justify-content: space-around;
+    justify-content: space-between;
     margin-bottom: 32px;
 
     &:last-child {
@@ -43,7 +43,13 @@
     @media(min-width:820px) {
       column-gap: 16px;
       row-gap: 80px;
-      grid-template-columns: repeat(auto-fit, minmax(302px, 302px));
+      grid-template-columns: repeat(auto-fit, minmax(262px, 302px));
+    }
+
+    @media(min-width:1120px) {
+      column-gap: 16px;
+      row-gap: 80px;
+      grid-template-columns: repeat(auto-fit, minmax(302px, 350px));
     }
 
     // padding-bottom: 24px;

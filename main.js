@@ -7,6 +7,7 @@ import { Footer } from './modules/Footer/Footer.js';
 import { Order } from './modules/Order/Order.js';
 import { ProductList } from './modules/ProductList/ProductList.js';
 import { ApiService } from './services/Apiservice.js';
+import { Catalog } from './modules/Catalog/Catalog';
 
 // import Swiper JS
 // import { Navigation, Thumbs } from 'swiper/modules'
@@ -58,6 +59,11 @@ const init = () => {
   new Main().mount();
   new Footer().mount();
 
+  api.getProductCategories().then(catalog => {
+    new Catalog().mount(new Main().element, catalog)
+
+  });
+
   productSlider();
 
   // const newTest = new Main();
@@ -71,6 +77,7 @@ const init = () => {
       console.log('На главной');
       const product = await api.getProduct();
       new ProductList().mount(new Main().element, product, 'Список всех товаров');
+
     }, {
       // before(done, match) {
       //   console.log('match: ', match);
@@ -91,8 +98,7 @@ const init = () => {
     })
     .on(`/category`, (obj) => {
       console.log('obj category: ', obj);
-      console.log('category');
-      console.log('На главной');
+      console.log('Категории');
       new ProductList().mount(new Main().element, [10, 11, 12, 22, 33, 44, 55], 'Категории');
     }, {
       leave(done, match) {
@@ -102,8 +108,7 @@ const init = () => {
     })
     .on(`/favorite`, (obj) => {
       console.log('obj favorite: ', obj);
-      console.log('favorite');
-      console.log('На главной');
+      console.log('Избранное');
       new ProductList().mount(new Main().element, [11, 343, 567, 876], 'Избранное');
     }, {
       leave(done, match) {

@@ -18,7 +18,6 @@ export class ApiService {
 
   };
 
-
   //3 получение ключа
   async getAccessKey() {
     try {
@@ -77,7 +76,7 @@ export class ApiService {
   };
 
   //1 получение товаров
-  async getProduct(page = 1, limit = 16, list, category, search) {
+  async getProduct(page = 1, limit = 20, list, category, search) {
     return await this.getData('api/products', {
       page,
       limit,
@@ -86,4 +85,13 @@ export class ApiService {
       search,
     });
   };
+
+  async getProductCategories() {
+    return await this.getData(`api/productCategories`);
+  };
+
+  async getProductById() {
+    return await this.getData(`api/products/${id}`);
+  };
 }
+
