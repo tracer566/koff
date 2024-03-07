@@ -5,14 +5,14 @@ import { Header } from './modules/Header/Header.js';
 import { Main } from './modules/Main/Main.js';
 import { Footer } from './modules/Footer/Footer.js';
 import { Order } from './modules/Order/Order.js';
-import { ProductList } from './modules/ProductList/ProductList';
+import { ProductList } from './modules/ProductList/ProductList.js';
+import { ApiService } from './services/Apiservice.js';
 
 // import Swiper JS
 // import { Navigation, Thumbs } from 'swiper/modules'
 // import Swiper from 'swiper';
 // import Swiper styles
 // import 'swiper/css';
-
 
 // изменения импортов.Динамический импорт:импорт произойдет при вызове функции слайдера
 const productSlider = () => {
@@ -22,9 +22,9 @@ const productSlider = () => {
     import('swiper'),
     import('swiper/css')
   ]).then(([{ Navigation, Thumbs }, Swiper]) => {
-    console.dir(Swiper);
-    console.dir(Thumbs);
-    console.dir(Navigation);
+    // console.dir(Swiper);
+    // console.dir(Thumbs);
+    // console.dir(Navigation);
     // без default ошибка: swiper not constructor
     const swiper = new Swiper.default(".product__slider-thumbnails", {
       spaceBetween: 10,
@@ -50,23 +50,27 @@ const productSlider = () => {
 
 // инициализация
 const init = () => {
-  productSlider();
+  // создание объекта из конструктора
+  const api = new ApiService();
+  console.log('api: ', api);
 
   new Header().mount();
   new Main().mount();
   new Footer().mount();
 
-  const newTest = new Main();
-  console.log('newTest: ', newTest);
+  productSlider();
 
+  // const newTest = new Main();
+  // console.log('newTest: ', newTest);
 
   //при заливке на гитхаб new Navigo(`/koff/dist`)
   const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
 
   router
-    .on(`/`, () => {
+    .on(`/`, async () => {
       console.log('На главной');
-      new ProductList().mount(new Main().element, [1, 2, 3, 4, 5, 6, 7, 8, 9], 'Список всех товаров');
+      const product = await api.getProduct();
+      new ProductList().mount(new Main().element, product, 'Список всех товаров');
     }, {
       // before(done, match) {
       //   console.log('match: ', match);
@@ -137,7 +141,6 @@ const init = () => {
       setTimeout(() => {
         router.navigate('/')
       }, 8e3);
-
 
     },
       {
