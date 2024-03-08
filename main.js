@@ -1,5 +1,6 @@
 import 'normalize.css';
 import './style.scss';
+// import robots from '/img/robots.jpg';
 import Navigo from 'navigo';
 import { Header } from './modules/Header/Header.js';
 import { Main } from './modules/Main/Main.js';
@@ -8,6 +9,7 @@ import { Order } from './modules/Order/Order.js';
 import { ProductList } from './modules/ProductList/ProductList.js';
 import { ApiService } from './services/Apiservice.js';
 import { Catalog } from './modules/Catalog/Catalog';
+
 
 // import Swiper JS
 // import { Navigation, Thumbs } from 'swiper/modules'
@@ -54,6 +56,8 @@ const init = () => {
   // создание объекта из конструктора
   const api = new ApiService();
   console.log('api: ', api);
+  //при заливке на гитхаб new Navigo(`/koff/dist`),создание роутера
+  const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
 
   new Header().mount();
   new Main().mount();
@@ -61,6 +65,9 @@ const init = () => {
 
   api.getProductCategories().then(catalog => {
     new Catalog().mount(new Main().element, catalog)
+    // так как функция заканивает работу до того как карточки и их ссылки создаются
+    // нужно обновить,иначе перезагрузка
+    router.updatePageLinks();
 
   });
 
@@ -69,14 +76,17 @@ const init = () => {
   // const newTest = new Main();
   // console.log('newTest: ', newTest);
 
-  //при заливке на гитхаб new Navigo(`/koff/dist`)
-  const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
 
   router
     .on(`/`, async () => {
       console.log('На главной');
       const product = await api.getProduct();
+      console.log('product: ', product);
       new ProductList().mount(new Main().element, product, 'Список всех товаров');
+
+      // так как функция заканивает работу до того как карточки и их ссылки создаются
+      // нужно обновить,иначе перезагрузка
+      // router.updatePageLinks();
 
     }, {
       // before(done, match) {
@@ -89,6 +99,7 @@ const init = () => {
       // },
       leave(done, match) {
         console.log('leave:');
+        new ProductList().unmount();
         done()
       },
       already(match) {
@@ -96,23 +107,35 @@ const init = () => {
 
       },
     })
-    .on(`/category`, (obj) => {
-      console.log('obj category: ', obj);
+    .on(`/category`, async ({ params: { slug } }) => {
+      // console.log('obj params category: ', obj.params.slug);
+      console.log('obj category slug деструктуризация: ', slug);
       console.log('Категории');
-      new ProductList().mount(new Main().element, [10, 11, 12, 22, 33, 44, 55], 'Категории');
+      const product = await api.getProduct();
+      // debugger
+      new ProductList().mount(new Main().element, product, slug);
+      // так как функция заканивает работу до того как карточки и их ссылки создаются
+      // нужно обновить,иначе перезагрузка
+      router.updatePageLinks();
     }, {
       leave(done, match) {
         console.log('leave:');
+        new ProductList().unmount();
         done()
       },
     })
-    .on(`/favorite`, (obj) => {
+    .on(`/favorite`, async (obj) => {
       console.log('obj favorite: ', obj);
       console.log('Избранное');
-      new ProductList().mount(new Main().element, [11, 343, 567, 876], 'Избранное');
+      const product = await api.getProduct();
+      new ProductList().mount(new Main().element, product, 'Избранное');
+      // так как функция заканивает работу до того как карточки и их ссылки создаются
+      // нужно обновить,иначе перезагрузка
+      router.updatePageLinks();
     }, {
       leave(done, match) {
         console.log('leave:');
+        new ProductList().unmount();
         done()
       },
     })
@@ -130,22 +153,19 @@ const init = () => {
     })
     .notFound(() => {
       console.log('Ошибка 404');
-      // document.querySelector('.main').innerHTML = `
-      // '<h2 style="text-align:center;position:relative;padding:100px;left:50%;
-      // transform:translateX(-50%)">Страница не найдена:(</h2>'
-      // `;
       new Main().element.innerHTML = `
       <div class="content" style="text-align:center;position:relative;left:50%;
-      transform:translateX(-50%);padding:100px;height:500px;">
-      <h2 style="font-size:22px;margin-bottom:10px;">Страница не найдена:(</h2>
-      <p style="font-size:18px;">Вы будете перенаправлены на <a href="/">главную страницу </a></p>
-     <img src="#" alt="#"> 
-            </div>
+      transform:translateX(-50%);padding:100px 20px;height:600px;">
+      <h2 style="font-size:22px;margin-bottom:10px;">Ошибка 404.Страница не найдена:(</h2>
+     <img src="./img/robots.jpg" style="margin:15px auto;border-radius:30px;" width="400" height="400" alt="#"> 
+
+      <p style="font-size:18px;">Вы будете перенаправлены на <a href="/">главную страницу </a>через некоторое время</p>
+      </div>
       `;
 
       setTimeout(() => {
         router.navigate('/')
-      }, 8e3);
+      }, 10e3);
 
     },
       {

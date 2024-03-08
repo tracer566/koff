@@ -9,7 +9,7 @@ export class ApiService {
   constructor() {
 
     this.accessKey = localStorage.getItem('accessKey');
-    console.log('this.accessKey: ', this.accessKey);
+    // console.log('this.accessKey: ', this.accessKey);
 
     // проверка url
     // const test2 = this.getAccessKey();
