@@ -1,5 +1,8 @@
 import { addContainer } from "../addContainer.js";
+// импорт лого как картинку
 import logoImg from "/img/logo.svg";
+// импорт лого как компонент
+import { Logo } from "../../features/Logo/Logo.js";
 
 export class Footer {
   static instance = null;
@@ -26,7 +29,10 @@ export class Footer {
       return;
     };
 
-    const logo = this.getlogo();
+    // импорт лого как картинку,через функцию в классе
+    // const logo = this.getlogo();
+    // импорт лого как компонент с классом
+    const logo = new Logo('footer').create();
     this.containerElement.append(logo);
     this.containerElement.insertAdjacentHTML('beforeend', this.getHTML())
     document.body.append(this.element);
@@ -44,20 +50,20 @@ export class Footer {
   }
 
   // создать лого
-  getlogo() {
-    const logo = document.createElement('a');
-    logo.classList.add('footer-link__logo');
-    logo.href = '/';
-    // const imgLogo = document.createElement('img');
-    const imgLogo = new Image();
-    imgLogo.classList.add('footer__logo');
-    imgLogo.src = logoImg;
-    imgLogo.alt = 'Логотип сайта мебельного маркета koff';
+  // getlogo() {
+  //   const logo = document.createElement('a');
+  //   logo.classList.add('footer-link__logo');
+  //   logo.href = '/';
+  //   // const imgLogo = document.createElement('img');
+  //   const imgLogo = new Image();
+  //   imgLogo.classList.add('footer__logo');
+  //   imgLogo.src = logoImg;
+  //   imgLogo.alt = 'Логотип сайта мебельного маркета koff';
 
-    logo.insertAdjacentElement('beforeend', imgLogo);
+  //   logo.insertAdjacentElement('beforeend', imgLogo);
 
-    return logo;
-  }
+  //   return logo;
+  // }
 
   getHTML() {
     return `

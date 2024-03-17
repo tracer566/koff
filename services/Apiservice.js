@@ -80,7 +80,7 @@ export class ApiService {
   };
 
   //1 получение товаров
-  async getProduct(page = 1, limit = 20, list, category, search) {
+  async getProduct(page = 1, limit = 30, list, category, search) {
     return await this.getData('api/products', {
       page,
       limit,

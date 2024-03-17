@@ -111,11 +111,11 @@
   }
 
   & svg {
-    color: #fff;
-    transition: color .3s ease-in-out;
+    fill: #fff;
+    transition: fill .3s ease-in-out;
   }
 
   & svg:hover {
-    color: #780096
+    fill: #780096
   }
 }

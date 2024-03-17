@@ -101,14 +101,21 @@
     border-radius: 6px;
     transition: color .5s ease;
 
+
+    svg {
+      fill: #fff;
+      transition: fill .3s ease-in-out;
+    }
+
     &:hover,
     &:active,
     &:focus-visible {
       color: #780096;
 
-      svg {
+      & svg {
         fill: #780096;
       }
+
     }
 
     &:focus-visible {
