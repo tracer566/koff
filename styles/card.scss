@@ -103,13 +103,6 @@
     }
   }
 
-  &__favorite {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-
-  }
-
   & svg {
     fill: #fff;
     transition: fill .3s ease-in-out;
@@ -118,4 +111,16 @@
   & svg:hover {
     fill: #780096
   }
+
+  &__favorite {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    &_active svg {
+      fill: gold;
+    }
+  }
+
+
 }

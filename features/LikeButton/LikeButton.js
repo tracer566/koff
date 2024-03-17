@@ -1,8 +1,10 @@
-import { likeSVG } from '../likeSVG/likeSVG.js'
+import { likeSVG } from '../likeSVG/likeSVG.js';
+import { favoriteService } from '../../services/StorageService.js';
 
 export class LikeButton {
   constructor(className) {
     this.className = className;
+    this.favoriteService = new favoriteService();
 
   };
 
@@ -16,9 +18,18 @@ export class LikeButton {
       btn.append(svg);
     });
 
+    if (this.favoriteService.check(id)) {
+      btn.classList.add(`${this.className}_active`);
+    };
 
     btn.addEventListener('click', () => {
-      console.log(`Добавить товар с id = ${btn.dataset.id} в Избранное`);
+      if (this.favoriteService.check(id)) {
+        this.favoriteService.remove(id);
+        btn.classList.remove(`${this.className}_active`);
+      } else {
+        this.favoriteService.add(id);
+        btn.classList.add(`${this.className}_active`);
+      };
     });
 
     return btn;

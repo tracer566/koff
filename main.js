@@ -217,3 +217,25 @@ init();
 //   console.log('arr: ', a, b, c);
 
 // });
+
+// теория старых функций-классов
+/* function Car(name = 'lada', year = 1998) {
+  this.name = name,
+    this.year = year,
+    this.now = new Date().getFullYear();
+  this.calc = function calc() {
+    this.result = this.now - this.year;
+    return this;
+  };
+
+};
+
+Car.prototype.getAge = function () {
+  return new Date().getFullYear() - this.year;
+}
+
+let lada = new Car().calc();
+let bmv = new Car('bmv', 2000)
+console.log('bmv: ', bmv);
+console.log('lada: ', lada); */
+

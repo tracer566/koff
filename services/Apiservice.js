@@ -1,21 +1,15 @@
 import axios from 'axios';
 import { API_URL } from '../const.js';
+import { accessKeyService } from './StorageService.js';
 
 export class ApiService {
   #apiURL = API_URL;
-  /* тестовый */
-  // #kzk = 'klk';
 
   constructor() {
-
-    this.accessKey = localStorage.getItem('accessKey');
-    // console.log('this.accessKey: ', this.accessKey);
+    this.accessKeyService = new accessKeyService('accessKey');
+    // console.log('this.accessKeyService: ', this.accessKeyService);
+    this.accessKey = this.accessKeyService.get();
     this.isDownLoadAccessKey = false;
-
-    // проверка url
-    // const test2 = this.getAccessKey();
-    // console.log('test2: ', test2);
-    // console.log('this.#apiURL: ', this.#apiURL);
 
   };
 
@@ -24,15 +18,10 @@ export class ApiService {
     try {
       if (!this.accessKey && !this.isDownLoadAccessKey) {
         this.isDownLoadAccessKey = true;
-        // сделал объект url в него сохранил ссылку api
-        // const url = new URL(this.#apiURL);
-        // console.log('url: ', url);
-        // url.pathname = `api/users/accessKey`;
-        // const responce = await axios.get(url);
 
         const responce = await axios.get(`${this.#apiURL}api/users/accessKey`);
         this.accessKey = responce.data.accessKey;
-        localStorage.setItem('accessKey', this.accessKey);
+        this.accessKeyService.set(this.accessKey)
         this.isDownLoadAccessKey = false;
       }
     } catch (error) {
@@ -49,12 +38,6 @@ export class ApiService {
       await this.getAccessKey();
     }
     try {
-      // можно fetch
-      // сделал объект url в него сохранил ссылку api
-      // const url = new URL(this.#apiURL);
-      // url.pathname = pathname;
-
-      /* с new URL() = await axios.get(url.href,*/
       const responce = await axios.get(`${this.#apiURL}${pathname}`, {
         headers: {
           Authorization: `Bearer ${this.accessKey}`
@@ -68,7 +51,7 @@ export class ApiService {
       console.dir(error)
       if (error.response && error.response.status === 401) {
         this.accessKey = null;
-        localStorage.removeItem('accessKey');
+        this.accessKeyService.delete();
 
         return this.getData(pathname, params);
       } else {
