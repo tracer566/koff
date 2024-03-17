@@ -179,3 +179,41 @@ const init = () => {
 };
 
 init();
+
+// теория
+// const promiseA = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve('A');
+//   }, 5000)
+// });
+// const promiseB = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve('from B:');
+//   }, 4000)
+// });
+// const promiseC = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve('from C:');
+//   }, 3000)
+// });
+
+// console.log('promiseA: ', promiseA);
+// console.log('promiseB: ', promiseB);
+// console.log('promiseC: ', promiseC);
+
+// вызов и обработка промиса
+// promiseA.then((item) => {
+//   console.log('item:', item);
+// })
+// promiseB.then((item) => {
+//   console.log(item);
+// })
+// promiseC.then((item) => {
+//   console.log(item);
+// })
+
+// вызов и обработка ряда промисов,в then((arr))-массив,его деструктурирую
+// Promise.all([promiseB, promiseA, promiseC]).then(([a, b, c]) => {
+//   console.log('arr: ', a, b, c);
+
+// });

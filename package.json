@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "postcss": "^8.4.35",
+    "postcss-sort-media-queries": "^5.2.0",
     "sass": "^1.71.1",
     "vite": "^5.1.4"
   },

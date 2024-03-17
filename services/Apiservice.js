@@ -10,6 +10,7 @@ export class ApiService {
 
     this.accessKey = localStorage.getItem('accessKey');
     // console.log('this.accessKey: ', this.accessKey);
+    this.isDownLoadAccessKey = false;
 
     // проверка url
     // const test2 = this.getAccessKey();
@@ -21,7 +22,8 @@ export class ApiService {
   //3 получение ключа
   async getAccessKey() {
     try {
-      if (!this.accessKey) {
+      if (!this.accessKey && !this.isDownLoadAccessKey) {
+        this.isDownLoadAccessKey = true;
         // сделал объект url в него сохранил ссылку api
         // const url = new URL(this.#apiURL);
         // console.log('url: ', url);
@@ -31,8 +33,10 @@ export class ApiService {
         const responce = await axios.get(`${this.#apiURL}api/users/accessKey`);
         this.accessKey = responce.data.accessKey;
         localStorage.setItem('accessKey', this.accessKey);
+        this.isDownLoadAccessKey = false;
       }
     } catch (error) {
+      this.isDownLoadAccessKey = false;
       console.log('getAccessKey error: ', error);
     }
 
@@ -86,10 +90,12 @@ export class ApiService {
     });
   };
 
+  // получение категория
   async getProductCategories() {
     return await this.getData(`api/productCategories`);
   };
 
+  // id товара
   async getProductById() {
     return await this.getData(`api/products/${id}`);
   };
