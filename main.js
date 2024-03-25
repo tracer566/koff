@@ -57,7 +57,7 @@ const init = () => {
   const api = new ApiService();
   console.log('api: ', api);
   //при заливке на гитхаб new Navigo(`/koff/dist`),создание роутера
-  const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
+  const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
 
   new Header().mount();
   new Main().mount();
@@ -80,9 +80,9 @@ const init = () => {
   router
     .on(`/`, async () => {
       console.log('На главной');
-      const product = await api.getProduct();
-      console.log('product: ', product);
-      new ProductList().mount(new Main().element, product, 'Список всех товаров');
+      const products = await api.getProduct();
+      console.log('product: ', products);
+      new ProductList().mount(new Main().element, products, 'Список всех товаров');
 
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
@@ -111,9 +111,14 @@ const init = () => {
       // console.log('obj params category: ', obj.params.slug);
       console.log('obj category slug деструктуризация: ', slug);
       console.log('Категории');
-      const product = await api.getProduct();
+      // 1 вариант
+      // const product = await api.getProduct({ category: slug });
+      // 2 вариант
+      //можно просто {data} вместо data:products,это переименование
+      const { data: products } = await api.getProduct({ category: slug });
+      console.log('products категории: ', products);
       // debugger
-      new ProductList().mount(new Main().element, product, slug);
+      new ProductList().mount(new Main().element, products, slug);
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
       router.updatePageLinks();
@@ -126,9 +131,9 @@ const init = () => {
     })
     .on(`/favorite`, async (obj) => {
       console.log('obj favorite: ', obj);
-      console.log('Избранное');
-      const product = await api.getProduct();
-      new ProductList().mount(new Main().element, product, 'Избранное');
+      // console.log('Избранное');
+      const products = await api.getProduct();
+      new ProductList().mount(new Main().element, products, 'Избранное');
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
       router.updatePageLinks();

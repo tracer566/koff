@@ -6,8 +6,10 @@ export class ApiService {
   #apiURL = API_URL;
 
   constructor() {
+    // создаю новый объект из StorageService
     this.accessKeyService = new accessKeyService('accessKey');
-    // console.log('this.accessKeyService: ', this.accessKeyService);
+
+    // получаю ключ из localstorage и сохраняю в значение this.accessKey
     this.accessKey = this.accessKeyService.get();
     this.isDownLoadAccessKey = false;
 
@@ -20,7 +22,9 @@ export class ApiService {
         this.isDownLoadAccessKey = true;
 
         const responce = await axios.get(`${this.#apiURL}api/users/accessKey`);
+        // записываю ключ в класс
         this.accessKey = responce.data.accessKey;
+        // отправляю ключ в localstorage
         this.accessKeyService.set(this.accessKey)
         this.isDownLoadAccessKey = false;
       }
@@ -31,9 +35,9 @@ export class ApiService {
 
   };
 
-  //2 получение данных
+  //2 получение данных,главная функция и 1ая по записи
   async getData(pathname, params = {}) {
-    console.log('getData params: ', params);
+    // console.log('getData params: ', params);
     if (!this.accessKey) {
       await this.getAccessKey();
     }
@@ -63,21 +67,24 @@ export class ApiService {
   };
 
   //1 получение товаров
-  async getProduct(page = 1, limit = 30, list, category, search) {
-    return await this.getData('api/products', {
-      page,
-      limit,
-      list,
-      category,
-      search,
-    });
+  // async getProduct(page = 1, limit = 30, list, category, search) {
+  //   return await this.getData('api/products', {
+  //     page,
+  //     limit,
+  //     list,
+  //     category,
+  //     search,
+  //   });
+  // };
+  async getProduct(params) {
+    return await this.getData('api/products', params);
   };
 
   // получение категория
   async getProductCategories() {
     return await this.getData(`api/productCategories`);
   };
-
+ 
   // id товара
   async getProductById() {
     return await this.getData(`api/products/${id}`);

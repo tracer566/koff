@@ -183,7 +183,7 @@ template {
 
 @font-face {
   font-family: Open Sans;
-  src: url(/fonts/open-sans-v36-cyrillic_latin-regular.woff2) format("woff2");
+  src: url(../fonts/open-sans-v36-cyrillic_latin-regular.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap
@@ -191,7 +191,7 @@ template {
 
 @font-face {
   font-family: Open Sans;
-  src: url(/fonts/open-sans-v36-cyrillic_latin-700.woff2) format("woff2");
+  src: url(../fonts/open-sans-v36-cyrillic_latin-700.woff2) format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap
@@ -199,7 +199,7 @@ template {
 
 @font-face {
   font-family: Inter;
-  src: url(/fonts/inter-v13-cyrillic_latin-regular.woff2) format("woff2");
+  src: url(../fonts/inter-v13-cyrillic_latin-regular.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap
@@ -408,6 +408,11 @@ fieldset {
   transition: color .5s ease
 }
 
+.header__link svg {
+  fill: #fff;
+  transition: fill .3s ease-in-out
+}
+
 .header__link:hover,
 .header__link:active,
 .header__link:focus-visible {
@@ -440,7 +445,7 @@ fieldset {
 
 .catalog__list {
   overflow-x: auto;
-  padding: 0 16px 5px;
+  padding: 0 0 5px;
   display: flex;
   gap: 4px
 }
@@ -517,8 +522,8 @@ fieldset {
   display: grid;
   column-gap: 8px;
   row-gap: 50px;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 140px));
-  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 140px));
+  justify-content: space-around;
   margin-bottom: 32px
 }
 
@@ -588,15 +593,23 @@ fieldset {
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
-  flex-grow: 1
+  flex-grow: 1;
+  max-width: 100%;
+  flex-direction: column-reverse;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+  text-align: center
 }
 
 .card__title {
-  font-weight: 400
+  font-weight: 400;
+  font-size: 14px
 }
 
 .card__price {
-  font-size: 16px
+  font-size: 14px;
+  font-weight: 700
 }
 
 .card__btn {
@@ -620,19 +633,23 @@ fieldset {
   border: 1px solid #CC00FF
 }
 
+.card svg {
+  fill: #fff;
+  transition: fill .3s ease-in-out
+}
+
+.card svg:hover {
+  fill: #780096
+}
+
 .card__favorite {
   position: absolute;
   top: 12px;
   right: 12px
 }
 
-.card svg {
-  color: #fff;
-  transition: color .3s ease-in-out
-}
-
-.card svg:hover {
-  color: #780096
+.card__favorite_active svg {
+  fill: gold
 }
 
 .product {
@@ -1179,10 +1196,6 @@ fieldset {
     padding-top: 32px
   }
 
-  .catalog__list {
-    padding: 0 29px
-  }
-
   .breadcrumb {
     padding-top: 24px
   }
@@ -1198,7 +1211,7 @@ fieldset {
   .goods__list {
     column-gap: 10px;
     row-gap: 65px;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 230px));
+    grid-template-columns: repeat(auto-fill, minmax(230px, 230px));
     margin-bottom: 40px
   }
 
@@ -1212,12 +1225,12 @@ fieldset {
 
   .card__title {
     font-size: 16px;
-    width: min-content;
+    margin-right: auto;
     padding-top: 3px
   }
 
   .card__price {
-    font-size: 20px
+    font-size: 16px
   }
 
   .card__btn {
@@ -1323,14 +1336,7 @@ fieldset {
     justify-self: center
   }
 
-  .catalog {
-    padding-top: 40px
-  }
-
-  .catalog__list {
-    padding: 0 43px
-  }
-
+  .catalog,
   .goods {
     padding-top: 40px
   }
@@ -1338,7 +1344,7 @@ fieldset {
   .goods__list {
     column-gap: 16px;
     row-gap: 80px;
-    grid-template-columns: repeat(auto-fit, minmax(262px, 302px))
+    grid-template-columns: repeat(auto-fill, minmax(262px, 302px))
   }
 
   .goods__list {
@@ -1350,6 +1356,11 @@ fieldset {
   }
 
   .card__info {
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    column-gap: 10px;
+    text-align: left;
     margin-bottom: 20px
   }
 
@@ -1458,14 +1469,10 @@ fieldset {
     max-width: 514px
   }
 
-  .catalog__list {
-    padding: 0 92px
-  }
-
   .goods__list {
     column-gap: 16px;
     row-gap: 80px;
-    grid-template-columns: repeat(auto-fit, minmax(302px, 350px))
+    grid-template-columns: repeat(auto-fill, minmax(302px, 350px))
   }
 
   .card__img {
