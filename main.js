@@ -9,6 +9,7 @@ import { Order } from './modules/Order/Order.js';
 import { ProductList } from './modules/ProductList/ProductList.js';
 import { ApiService } from './services/Apiservice.js';
 import { Catalog } from './modules/Catalog/Catalog';
+import { favoriteService } from './services/StorageService';
 
 
 // import Swiper JS
@@ -80,7 +81,7 @@ const init = () => {
   router
     .on(`/`, async () => {
       console.log('На главной');
-      const products = await api.getProduct();
+      const products = await api.getProduct({ limit: 12 });
       console.log('product: ', products);
       new ProductList().mount(new Main().element, products, 'Список всех товаров');
 
@@ -131,9 +132,16 @@ const init = () => {
     })
     .on(`/favorite`, async (obj) => {
       console.log('obj favorite: ', obj);
+      // достаю из localstorage favorite
+      const favorite = new favoriteService().get();
+      console.log('favorite: ', favorite);
       // console.log('Избранное');
-      const products = await api.getProduct();
-      new ProductList().mount(new Main().element, products, 'Избранное');
+      // передаю в запрос данных favorite параметру list
+      // без join() запрос такой https://koff-api.vercel.app/api/products?list[]=19&list[]=44,
+      // {data:products} вытаскивает data из переменной с объектом и переименуюет в products
+      const { data: products } = await api.getProduct({ list: favorite.join(',') });
+      console.log('products favorite: ', products);
+      new ProductList().mount(new Main().element, products, 'Избранное', 'Вы ничего не добавили в избранное:( Нажмите на сердечко на любой карточке и попробуйте снова.Для возрата на список всех товаров нажмите на логотип или на любую категорию');
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
       router.updatePageLinks();
@@ -143,6 +151,10 @@ const init = () => {
         new ProductList().unmount();
         done()
       },
+      already(match) {
+        // проверить работу
+        match.route.handler(match);
+      }
     })
     .on(`/search`, () => {
       console.log('search');

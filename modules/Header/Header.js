@@ -102,6 +102,7 @@ export class Header {
     const favoriteLink = document.createElement('a');
     favoriteLink.classList.add('header__link');
     favoriteLink.href = '/favorite';
+    favoriteLink.title = 'Избранное';
     const favoriteText = document.createElement('span');
     favoriteText.classList.add('header__link-text');
     favoriteText.textContent = 'Избранное';
@@ -124,6 +125,7 @@ export class Header {
     const cartLink = document.createElement('a');
     cartLink.classList.add('header__link');
     cartLink.href = '/cart';
+    cartLink.title = 'Корзина';
 
     const linkText = document.createElement('span');
     linkText.classList.add('header__link-text');

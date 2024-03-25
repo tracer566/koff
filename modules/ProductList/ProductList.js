@@ -23,7 +23,7 @@ export class ProductList {
   }
 
   // монтаж элемента
-  mount(parent, data, title) {
+  mount(parent, data, title, emptyText) {
     // в parent передаю объект new Main().element 
 
     this.containerElement.textContent = "";
@@ -35,8 +35,17 @@ export class ProductList {
     // в this elem => section => container
     this.containerElement.append(titleElem);
 
-    // обновить список товаров,сразу действие
-    this.updateListElem(data);
+    // проверка что data есть
+    if (data && data.length) {
+      // обновить список товаров,сразу действие
+      this.updateListElem(data);
+    } else {
+      this.containerElement.insertAdjacentHTML('beforeend', `
+      <p class="goods__empty" style="font-weigth:700;margin:70px;font-size:19px">${emptyText || 'Произошла ошибка,нет товара или нет данных о товаре на этой странице,попробуйте еще раз:(.Для возрата на главную нажмите на логотип'}</p>
+      `)
+    }
+
+
 
     // проверка
     if (this.isMounted) {
