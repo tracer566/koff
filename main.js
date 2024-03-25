@@ -104,8 +104,7 @@ const init = () => {
         done()
       },
       already(match) {
-        console.log('already:');
-
+        match.route.handler(match);
       },
     })
     .on(`/category`, async ({ params: { slug } }) => {
