@@ -24,6 +24,8 @@ export class Catalog {
   // новый метод получение данных в каталоге
   async getData() {
     this.catalogData = await new ApiService().getProductCategories();
+    // для гит
+    router.updatePageLinks();
   };
 
   // монтаж элемента
