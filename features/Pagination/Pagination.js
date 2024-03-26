@@ -1,3 +1,5 @@
+import { router } from "../../main.js";
+
 export class Pagination {
   static instance = null;
 
@@ -24,7 +26,11 @@ export class Pagination {
       '--width', `calc(${width < totalProducts ? width : totalProducts} / ${totalProducts} * 100%)`
     )
 
-    this.paginationСurrent.textContent = width < totalProducts ? width : width - limit + (totalProducts % limit);
+    this.paginationСurrent.textContent = totalProducts === limit
+      ? totalProducts
+      : width < totalProducts
+        ? width
+        : width - limit + (totalProducts % limit);
     this.paginationTotal.textContent = totalProducts;
 
     // на гите будет иначе
@@ -34,7 +40,7 @@ export class Pagination {
       // для dev
       // this.paginationLeft.href = urlleft.pathname + urlleft.search;
       // для гит
-      this.paginationLeft.href += urlleft.search;
+      this.paginationLeft.href = urlleft.search;
 
     } else {
       this.paginationLeft.removeAttribute('href');
@@ -48,7 +54,7 @@ export class Pagination {
       // для dev
       // this.paginationRight.href = urlRight.pathname + urlRight.search;
       // для гит
-      this.paginationRight.href += urlRight.search;
+      this.paginationRight.href = urlRight.search;
 
       console.log('urlRight.search: ', urlRight.search);
       console.log('urlRight.pathname: ', urlRight.pathname);
@@ -56,10 +62,7 @@ export class Pagination {
       this.paginationRight.removeAttribute('href');
     };
 
-
-
-    // this.paginationLeft = '';
-    // this.paginationRight = '';
+    router.updatePageLinks();
 
     return this;
   };

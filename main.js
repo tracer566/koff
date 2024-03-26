@@ -11,6 +11,7 @@ import { ApiService } from './services/Apiservice.js';
 import { Catalog } from './modules/Catalog/Catalog.js';
 import { favoriteService } from './services/StorageService.js';
 import { Pagination } from './features/Pagination/Pagination.js';
+import { BreadCrumbs } from './features/BreadCrumbs/BreadCrumbs.js';
 
 
 // import Swiper JS
@@ -53,17 +54,19 @@ const productSlider = () => {
 
 };
 
+//при заливке на гитхаб new Navigo(`/koff/dist`),создание роутера
+export const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
+
 // инициализация
 const init = () => {
   // создание объекта из конструктора
   const api = new ApiService();
   console.log('api: ', api);
-  //при заливке на гитхаб new Navigo(`/koff/dist`),создание роутера
-  const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
 
   new Header().mount();
   new Main().mount();
   new Footer().mount();
+
 
   /*   api.getProductCategories().then(catalog => {
       new Catalog().mount(new Main().element, catalog)
@@ -75,12 +78,8 @@ const init = () => {
 
   productSlider();
 
-  // const newTest = new Main();
-  // console.log('newTest: ', newTest);
-
   router
     .on(`/`, async () => {
-      console.log('На главной');
       new Catalog().mount(new Main().element);
       const products = await api.getProduct({ limit: 18 });
       console.log('Получил product на главной: ', products);
@@ -108,19 +107,19 @@ const init = () => {
         match.route.handler(match);
       },
     })
-    .on(`/category`, async ({ params: { slug, page } }) => {
+    .on(`/category`, async ({ params: { slug, page = 1 } }) => {
       // console.log('obj params category: ', obj.params.slug);
       new Catalog().mount(new Main().element);
-      console.log('obj category slug деструктуризация: ', slug);
-      console.log('Категории');
       // 1 вариант
       // const product = await api.getProduct({ category: slug });
       // 2 вариант
       //можно просто {data} вместо data:products,это переименование
-      const { data: products, pagination } = await api.getProduct({ category: slug, page: page || 1, limit: 9 });
+      const { data: products, pagination } = await api.getProduct({ category: slug, page: page, limit: 9 });
 
       console.log('products категории: ', products, pagination);
       // debugger
+
+      new BreadCrumbs().mount(new Main().element, [{ text: slug }]);
       new ProductList().mount(new Main().element, products, slug);
       new Pagination()
         .mount(new ProductList().containerElement)
@@ -132,31 +131,37 @@ const init = () => {
     }, {
       leave(done, match) {
         console.log('leave:');
+        new BreadCrumbs().unmount();
         new ProductList().unmount();
         new Catalog().unmount();
         done()
       },
     })
-    .on(`/favorite`, async (obj) => {
-      console.log('obj favorite: ', obj);
+    .on(`/favorite`, async ({ params }) => {
       new Catalog().mount(new Main().element);
       // достаю из localstorage favorite
       const favorite = new favoriteService().get();
       console.log('favorite: ', favorite);
-      // console.log('Избранное');
       // передаю в запрос данных favorite параметру list
       // без join() запрос такой https://koff-api.vercel.app/api/products?list[]=19&list[]=44,
       // {data:products} вытаскивает data из переменной с объектом и переименуюет в products
-      const { data: products } = await api.getProduct({ list: favorite.join(',') });
+      const { data: products, pagination } = await api.getProduct({
+        list: favorite.join(','),
+        page: params?.page || 1
+      });
       console.log('products favorite: ', products);
+
+      new BreadCrumbs().mount(new Main().element, [{ text: 'Избранное' }]);
       new ProductList().mount(new Main().element, products, 'Избранное', 'Вы ничего не добавили в избранное:( Нажмите на сердечко на любой карточке и попробуйте снова.Для возрата на список всех товаров нажмите на логотип или на любую категорию');
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
+      new Pagination().mount(new ProductList().containerElement).update(pagination);
       router.updatePageLinks();
 
     }, {
       leave(done, match) {
         console.log('leave:');
+        new BreadCrumbs().unmount();
         new ProductList().unmount();
         new Catalog().unmount();
         done()
