@@ -65,13 +65,13 @@ const init = () => {
   new Main().mount();
   new Footer().mount();
 
-  api.getProductCategories().then(catalog => {
-    new Catalog().mount(new Main().element, catalog)
-    // так как функция заканивает работу до того как карточки и их ссылки создаются
-    // нужно обновить,иначе перезагрузка
-    router.updatePageLinks();
-
-  });
+  /*   api.getProductCategories().then(catalog => {
+      new Catalog().mount(new Main().element, catalog)
+      // так как функция заканивает работу до того как карточки и их ссылки создаются
+      // нужно обновить,иначе перезагрузка
+      router.updatePageLinks();
+  
+    }); */
 
   productSlider();
 
@@ -82,8 +82,9 @@ const init = () => {
   router
     .on(`/`, async () => {
       console.log('На главной');
+      new Catalog().mount(new Main().element);
       const products = await api.getProduct({ limit: 18 });
-      console.log('product: ', products);
+      console.log('Получил product на главной: ', products);
       new ProductList().mount(new Main().element, products, 'Список всех товаров');
 
       // так как функция заканивает работу до того как карточки и их ссылки создаются
@@ -102,7 +103,8 @@ const init = () => {
       leave(done, match) {
         console.log('leave:');
         new ProductList().unmount();
-        done()
+        new Catalog().unmount();
+        done();
       },
       already(match) {
         match.route.handler(match);
@@ -110,6 +112,7 @@ const init = () => {
     })
     .on(`/category`, async ({ params: { slug, page } }) => {
       // console.log('obj params category: ', obj.params.slug);
+      new Catalog().mount(new Main().element);
       console.log('obj category slug деструктуризация: ', slug);
       console.log('Категории');
       // 1 вариант
@@ -131,11 +134,13 @@ const init = () => {
       leave(done, match) {
         console.log('leave:');
         new ProductList().unmount();
+        new Catalog().unmount();
         done()
       },
     })
     .on(`/favorite`, async (obj) => {
       console.log('obj favorite: ', obj);
+      new Catalog().mount(new Main().element);
       // достаю из localstorage favorite
       const favorite = new favoriteService().get();
       console.log('favorite: ', favorite);
@@ -153,6 +158,7 @@ const init = () => {
       leave(done, match) {
         console.log('leave:');
         new ProductList().unmount();
+        new Catalog().unmount();
         done()
       },
       already(match) {
@@ -172,7 +178,7 @@ const init = () => {
     .on(`/order`, () => {
       new Order().mount();
     })
-    .notFound(() => {
+    .notFound('/', () => {
       console.log('Ошибка 404');
       new Main().element.innerHTML = `
       <div class="content" style="text-align:center;position:relative;left:50%;

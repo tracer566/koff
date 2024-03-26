@@ -1,3 +1,4 @@
+import { ApiService } from "../../services/Apiservice";
 import { addContainer } from "../addContainer";
 
 export class Catalog {
@@ -20,18 +21,24 @@ export class Catalog {
     return Catalog.instance;
   }
 
+  // новый метод получение данных в каталоге
+  async getData() {
+    this.catalogData = await new ApiService().getProductCategories();
+  };
+
   // монтаж элемента
-  mount(parent, data) {
+  async mount(parent) {
 
     if (this.isMounted) {
       return;
     };
 
-    const catalogList = this.renderListElem(data);
-    this.containerElement.append(catalogList);
+    if (!this.catalogData) {
+      await this.getData();
+      this.renderListElem(this.catalogData);
+    };
 
     parent.prepend(this.element);
-
     // проверка
     this.isMounted = true;
 
@@ -58,7 +65,7 @@ export class Catalog {
     // console.log('[...catalogItems]', [...catalogItems].join(''));
     catalogList.insertAdjacentHTML('beforeend', [...catalogItems].join(''));
 
-    return catalogList;
+    this.containerElement.append(catalogList);
 
   };
 
