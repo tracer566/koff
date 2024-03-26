@@ -178,7 +178,7 @@ const init = () => {
     .on(`/order`, () => {
       new Order().mount();
     })
-    .notFound('/', () => {
+    .notFound('/koff/dist/', () => {
       console.log('Ошибка 404');
       new Main().element.innerHTML = `
       <div class="content" style="text-align:center;position:relative;left:50%;
