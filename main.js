@@ -59,7 +59,7 @@ const init = () => {
   const api = new ApiService();
   console.log('api: ', api);
   //при заливке на гитхаб new Navigo(`/koff/dist`),создание роутера
-  const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
+  const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
 
   new Header().mount();
   new Main().mount();
