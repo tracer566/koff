@@ -78,10 +78,10 @@ const init = () => {
   // const newTest = new Main();
   // console.log('newTest: ', newTest);
 
-
   router
     .on(`/`, async () => {
       console.log('На главной');
+      router.updatePageLinks();
       new Catalog().mount(new Main().element);
       const products = await api.getProduct({ limit: 18 });
       console.log('Получил product на главной: ', products);
@@ -89,7 +89,6 @@ const init = () => {
 
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
-      router.updatePageLinks();
 
     }, {
       // before(done, match) {
@@ -123,13 +122,14 @@ const init = () => {
 
       console.log('products категории: ', products, pagination);
       // debugger
+      // нужно обновить,иначе перезагрузка
+      router.updatePageLinks();
       new ProductList().mount(new Main().element, products, slug);
       new Pagination()
         .mount(new ProductList().containerElement)
         .update(pagination);
       // так как функция заканивает работу до того как карточки и их ссылки создаются
-      // нужно обновить,иначе перезагрузка
-      router.updatePageLinks();
+
     }, {
       leave(done, match) {
         console.log('leave:');
@@ -140,6 +140,8 @@ const init = () => {
     })
     .on(`/favorite`, async (obj) => {
       console.log('obj favorite: ', obj);
+      // нужно обновить,иначе перезагрузка
+      router.updatePageLinks();
       new Catalog().mount(new Main().element);
       // достаю из localstorage favorite
       const favorite = new favoriteService().get();
@@ -152,8 +154,7 @@ const init = () => {
       console.log('products favorite: ', products);
       new ProductList().mount(new Main().element, products, 'Избранное', 'Вы ничего не добавили в избранное:( Нажмите на сердечко на любой карточке и попробуйте снова.Для возрата на список всех товаров нажмите на логотип или на любую категорию');
       // так как функция заканивает работу до того как карточки и их ссылки создаются
-      // нужно обновить,иначе перезагрузка
-      router.updatePageLinks();
+
     }, {
       leave(done, match) {
         console.log('leave:');

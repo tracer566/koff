@@ -59,7 +59,7 @@ export class Catalog {
     const catalogItems = data.map(item => {
       return `
       <li class="catalog__item">
-        <a class="catalog__link" href="/category?slug=${item}">${item}</a>
+        <a class="catalog__link" href="/category?slug=${item}&page=1">${item}</a>
         </li>
       `;
     });
