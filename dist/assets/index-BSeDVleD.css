@@ -570,6 +570,12 @@ fieldset {
   padding-top: 2px
 }
 
+.pagination__info {
+  display: flex;
+  align-items: center;
+  gap: 4px
+}
+
 .card {
   position: relative;
   height: 100%;

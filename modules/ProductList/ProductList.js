@@ -45,8 +45,6 @@ export class ProductList {
       `)
     }
 
-
-
     // проверка
     if (this.isMounted) {
       return;
@@ -82,10 +80,7 @@ export class ProductList {
 
     listElem.append(...listItems);
     this.containerElement.append(listElem);
-
-
   };
-
 
 }
 

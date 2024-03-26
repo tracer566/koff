@@ -8,8 +8,9 @@ import { Footer } from './modules/Footer/Footer.js';
 import { Order } from './modules/Order/Order.js';
 import { ProductList } from './modules/ProductList/ProductList.js';
 import { ApiService } from './services/Apiservice.js';
-import { Catalog } from './modules/Catalog/Catalog';
-import { favoriteService } from './services/StorageService';
+import { Catalog } from './modules/Catalog/Catalog.js';
+import { favoriteService } from './services/StorageService.js';
+import { Pagination } from './features/Pagination/Pagination.js';
 
 
 // import Swiper JS
@@ -81,7 +82,7 @@ const init = () => {
   router
     .on(`/`, async () => {
       console.log('На главной');
-      const products = await api.getProduct({ limit: 12 });
+      const products = await api.getProduct({ limit: 18 });
       console.log('product: ', products);
       new ProductList().mount(new Main().element, products, 'Список всех товаров');
 
@@ -107,7 +108,7 @@ const init = () => {
         match.route.handler(match);
       },
     })
-    .on(`/category`, async ({ params: { slug } }) => {
+    .on(`/category`, async ({ params: { slug, page } }) => {
       // console.log('obj params category: ', obj.params.slug);
       console.log('obj category slug деструктуризация: ', slug);
       console.log('Категории');
@@ -115,10 +116,14 @@ const init = () => {
       // const product = await api.getProduct({ category: slug });
       // 2 вариант
       //можно просто {data} вместо data:products,это переименование
-      const { data: products } = await api.getProduct({ category: slug });
-      console.log('products категории: ', products);
+      const { data: products, pagination } = await api.getProduct({ category: slug, page: page || 1, limit: 9 });
+
+      console.log('products категории: ', products, pagination);
       // debugger
       new ProductList().mount(new Main().element, products, slug);
+      new Pagination()
+        .mount(new ProductList().containerElement)
+        .update(pagination);
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
       router.updatePageLinks();
