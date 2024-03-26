@@ -32,9 +32,9 @@ export class Pagination {
     if (currentPage !== 1) {
       urlleft.searchParams.set('page', currentPage - 1);
       // для dev
-      this.paginationLeft.href = urlleft.pathname + urlleft.search;
+      // this.paginationLeft.href = urlleft.pathname + urlleft.search;
       // для гит
-      // this.paginationLeft.href += urlleft.search;
+      this.paginationLeft.href += urlleft.search;
 
     } else {
       this.paginationLeft.removeAttribute('href');
@@ -46,9 +46,9 @@ export class Pagination {
     if (currentPage !== totalPages) {
       urlRight.searchParams.set('page', currentPage + 1);
       // для dev
-      this.paginationRight.href = urlRight.pathname + urlRight.search;
+      // this.paginationRight.href = urlRight.pathname + urlRight.search;
       // для гит
-      // this.paginationRight.href += urlRight.search;
+      this.paginationRight.href += urlRight.search;
 
       console.log('urlRight.search: ', urlRight.search);
       console.log('urlRight.pathname: ', urlRight.pathname);
