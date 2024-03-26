@@ -89,7 +89,7 @@ const init = () => {
 
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
-      // router.updatePageLinks();
+      router.updatePageLinks();
 
     }, {
       // before(done, match) {
@@ -192,7 +192,7 @@ const init = () => {
 
       setTimeout(() => {
         router.navigate('/')
-      }, 10e3);
+      }, 20e3);
 
     },
       {
