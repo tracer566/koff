@@ -1,5 +1,8 @@
 import { API_URL } from "../../const.js";
 import { addContainer } from "../addContainer.js";
+import { CartButton } from "../../features/CartButton/CartButton.js"
+import { LikeButton } from "../../features/LikeButton/LikeButton.js"
+
 
 export class ProductCard {
   static instance = null;
@@ -201,20 +204,27 @@ export class ProductCard {
     productButtons.classList.add('product__btns');
 
     // корзина
-    const productBtn = document.createElement('button');
-    productBtn.classList.add('product__btn');
-    productBtn.type = 'button';
-    productBtn.textContent = 'В корзину';
+    // const productBtn = document.createElement('button');
+    // productBtn.classList.add('product__btn');
+    // productBtn.type = 'button';
+    // productBtn.textContent = 'В корзину';
 
     // like
-    const productLike = document.createElement('button');
-    productLike.classList.add('product__like');
-    productLike.type = 'button';
-    productLike.innerHTML = `
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8.4135 13.8733C8.18683 13.9533 7.8135 13.9533 7.58683 13.8733C5.6535 13.2133 1.3335 10.46 1.3335 5.79332C1.3335 3.73332 2.9935 2.06665 5.04016 2.06665C6.2535 2.06665 7.32683 2.65332 8.00016 3.55998C8.6735 2.65332 9.7535 2.06665 10.9602 2.06665C13.0068 2.06665 14.6668 3.73332 14.6668 5.79332C14.6668 10.46 10.3468 13.2133 8.4135 13.8733Z" fill="white" stroke="#1C1C1C" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-    `;
+    //     const productLike = document.createElement('button');
+    //     productLike.classList.add('product__like');
+    //     productLike.type = 'button';
+    //     productLike.innerHTML = `
+    //     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    // <path d="M8.4135 13.8733C8.18683 13.9533 7.8135 13.9533 7.58683 13.8733C5.6535 13.2133 1.3335 10.46 1.3335 5.79332C1.3335 3.73332 2.9935 2.06665 5.04016 2.06665C6.2535 2.06665 7.32683 2.65332 8.00016 3.55998C8.6735 2.65332 9.7535 2.06665 10.9602 2.06665C13.0068 2.06665 14.6668 3.73332 14.6668 5.79332C14.6668 10.46 10.3468 13.2133 8.4135 13.8733Z" fill="white" stroke="#1C1C1C" stroke-linecap="round" stroke-linejoin="round"/>
+    // </svg>
+    //     `;
+
+
+    // корзина
+    const productBtn = new CartButton('product__btn', 'В корзину').create(data.id);
+    // like
+    const productLike = new LikeButton('product__like').create(data.id);
+
 
     // кнопки в обертку
     productButtons.append(productBtn, productLike);
@@ -225,7 +235,7 @@ export class ProductCard {
     return productInfo;
   };
 
-}
+};
 
 /* 
 <div class="product__info">

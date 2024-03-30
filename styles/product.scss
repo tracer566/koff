@@ -169,6 +169,20 @@
   &__like {
     width: 16px;
     height: 16px;
+
+    & svg {
+      fill: #fff;
+      transition: fill .3s ease-in-out;
+    }
+
+    & svg:hover {
+      fill: #780096
+    }
+
+    &_active svg {
+      fill: gold;
+    }
+
   }
 
   &__arrow {

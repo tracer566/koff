@@ -13,50 +13,15 @@ import { favoriteService } from './services/StorageService.js';
 import { Pagination } from './features/Pagination/Pagination.js';
 import { BreadCrumbs } from './features/BreadCrumbs/BreadCrumbs.js';
 import { ProductCard } from './modules/ProductCard/ProductCard.js';
-
-
+import { productSlider } from './features/ProductSlider/ProductSlider.js'
 // import Swiper JS
 // import { Navigation, Thumbs } from 'swiper/modules'
 // import Swiper from 'swiper';
 // import Swiper styles
 // import 'swiper/css';
 
-// изменения импортов.Динамический импорт:импорт произойдет при вызове функции слайдера
-const productSlider = () => {
-  // массив с промисами
-  Promise.all([
-    import('swiper/modules'),
-    import('swiper'),
-    import('swiper/css')
-  ]).then(([{ Navigation, Thumbs }, Swiper]) => {
-    // console.dir(Swiper);
-    // console.dir(Thumbs);
-    // console.dir(Navigation);
-    // без default ошибка: swiper not constructor
-    const swiper = new Swiper.default(".product__slider-thumbnails", {
-      spaceBetween: 10,
-      slidesPerView: 4,
-      freeMode: true,
-      watchSlidesProgress: true,
-    });
-    // без default ошибка: swiper not constructor
-    const swiper2 = new Swiper.default(".product__slider-main", {
-      spaceBetween: 10,
-      navigation: {
-        nextEl: ".product__arrow_next",
-        prevEl: ".product__arrow_prev",
-      },
-      modules: [Navigation, Thumbs],
-      thumbs: {
-        swiper: swiper,
-      },
-    });
-  });
-
-};
-
 //при заливке на гитхаб new Navigo(`/koff/dist`),создание роутера
-export const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
+export const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
 
 // инициализация
 const init = () => {
@@ -68,7 +33,6 @@ const init = () => {
   new Main().mount();
   new Footer().mount();
 
-
   /*   api.getProductCategories().then(catalog => {
       new Catalog().mount(new Main().element, catalog)
       // так как функция заканивает работу до того как карточки и их ссылки создаются
@@ -77,7 +41,7 @@ const init = () => {
   
     }); */
 
-  productSlider();
+  // productSlider();
 
   router
     .on(`/`, async () => {
@@ -88,7 +52,6 @@ const init = () => {
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
       router.updatePageLinks();
-
     }, {
       // before(done, match) {
       //   console.log('match: ', match);
@@ -150,6 +113,7 @@ const init = () => {
       console.log('products favorite: ', products);
 
       new BreadCrumbs().mount(new Main().element, [{ text: 'Избранное' }]);
+      // отрисовка избранного
       new ProductList().mount(new Main().element, products, 'Избранное', 'Вы ничего не добавили в избранное:( Нажмите на сердечко на любой карточке и попробуйте снова.Для возрата на список всех товаров нажмите на логотип или на любую категорию');
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
@@ -180,15 +144,18 @@ const init = () => {
 
       new BreadCrumbs().mount(new Main().element, [{
         text: data.category,
-        href: `/category?slug=${data.category}`
+        href: `/category?slug=${data.category}`,
       },
       {
-        text: data.title
+        text: data.name,
       }
       ]);
 
+      // отрисовка страницы продукта
       new ProductCard().mount(new Main().element, data);
       console.log('new ProductCard(): ', new ProductCard());
+      // вызываю слайдер
+      productSlider();
 
     }, {
       leave(done) {
@@ -234,62 +201,5 @@ const init = () => {
 
 init();
 
-// теория
-// const promiseA = new Promise((resolve, reject) => {
-//   setTimeout(() => {
-//     resolve('A');
-//   }, 5000)
-// });
-// const promiseB = new Promise((resolve, reject) => {
-//   setTimeout(() => {
-//     resolve('from B:');
-//   }, 4000)
-// });
-// const promiseC = new Promise((resolve, reject) => {
-//   setTimeout(() => {
-//     resolve('from C:');
-//   }, 3000)
-// });
 
-// console.log('promiseA: ', promiseA);
-// console.log('promiseB: ', promiseB);
-// console.log('promiseC: ', promiseC);
-
-// вызов и обработка промиса
-// promiseA.then((item) => {
-//   console.log('item:', item);
-// })
-// promiseB.then((item) => {
-//   console.log(item);
-// })
-// promiseC.then((item) => {
-//   console.log(item);
-// })
-
-// вызов и обработка ряда промисов,в then((arr))-массив,его деструктурирую
-// Promise.all([promiseB, promiseA, promiseC]).then(([a, b, c]) => {
-//   console.log('arr: ', a, b, c);
-
-// });
-
-// теория старых функций-классов
-/* function Car(name = 'lada', year = 1998) {
-  this.name = name,
-    this.year = year,
-    this.now = new Date().getFullYear();
-  this.calc = function calc() {
-    this.result = this.now - this.year;
-    return this;
-  };
-
-};
-
-Car.prototype.getAge = function () {
-  return new Date().getFullYear() - this.year;
-}
-
-let lada = new Car().calc();
-let bmv = new Car('bmv', 2000)
-console.log('bmv: ', bmv);
-console.log('lada: ', lada); */
 

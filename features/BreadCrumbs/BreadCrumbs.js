@@ -34,6 +34,7 @@ export class BreadCrumbs {
   };
 
   render(list) {
+    console.log('bread list: ', list);
     this.containerElement.textContent = '';
     const listElem = document.createElement('ul');
     listElem.classList.add('breadcrumb__list');
