@@ -169,7 +169,7 @@ var pn = Object.defineProperty; var mn = (t, e, n) => e in t ? pn(t, e, { enumer
       <div class="content" style="text-align:center;position:relative;left:50%;
       transform:translateX(-50%);padding:100px 20px;height:600px;">
       <h2 style="font-size:22px;margin-bottom:10px;">Ошибка 404.Страница не найдена:(</h2>
-     <img src="./img/robots.jpg" style="margin:15px auto;border-radius:30px;" width="400" height="400" alt="#"> 
+     <img src="../../img/robots.jpg" style="margin:15px auto;border-radius:30px;" width="400" height="400" alt="#"> 
 
       <p style="font-size:18px;">Вы будете перенаправлены на <a href="/">главную страницу </a>через некоторое время</p>
       </div>
