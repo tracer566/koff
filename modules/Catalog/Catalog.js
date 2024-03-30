@@ -41,6 +41,7 @@ export class Catalog {
     };
 
     parent.prepend(this.element);
+
     // проверка
     this.isMounted = true;
 
@@ -48,11 +49,14 @@ export class Catalog {
 
   // демонтаж элемента
   unmount() {
+    console.log('Демонтаж каталога');
     this.element.remove();
     this.isMounted = false;
   }
 
   renderListElem(data) {
+    this.containerElement.innerHTML = '';
+
     const catalogList = document.createElement('ul');
     catalogList.classList.add('catalog__list');
 

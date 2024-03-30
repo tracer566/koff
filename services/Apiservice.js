@@ -84,9 +84,9 @@ export class ApiService {
   async getProductCategories() {
     return await this.getData(`api/productCategories`);
   };
- 
+
   // id товара
-  async getProductById() {
+  async getProductById(id) {
     return await this.getData(`api/products/${id}`);
   };
 }

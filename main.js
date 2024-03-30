@@ -12,6 +12,7 @@ import { Catalog } from './modules/Catalog/Catalog.js';
 import { favoriteService } from './services/StorageService.js';
 import { Pagination } from './features/Pagination/Pagination.js';
 import { BreadCrumbs } from './features/BreadCrumbs/BreadCrumbs.js';
+import { ProductCard } from './modules/ProductCard/ProductCard.js';
 
 
 // import Swiper JS
@@ -55,7 +56,7 @@ const productSlider = () => {
 };
 
 //при заливке на гитхаб new Navigo(`/koff/dist`),создание роутера
-export const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
+export const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
 
 // инициализация
 const init = () => {
@@ -98,7 +99,6 @@ const init = () => {
       //   console.log('after:');
       // },
       leave(done, match) {
-        console.log('leave:');
         new ProductList().unmount();
         new Catalog().unmount();
         done();
@@ -116,11 +116,10 @@ const init = () => {
       //можно просто {data} вместо data:products,это переименование
       const { data: products, pagination } = await api.getProduct({ category: slug, page: page, limit: 9 });
 
-      console.log('products категории: ', products, pagination);
-      // debugger
-
       new BreadCrumbs().mount(new Main().element, [{ text: slug }]);
       new ProductList().mount(new Main().element, products, slug);
+
+
       new Pagination()
         .mount(new ProductList().containerElement)
         .update(pagination);
@@ -130,10 +129,9 @@ const init = () => {
 
     }, {
       leave(done, match) {
-        console.log('leave:');
-        new BreadCrumbs().unmount();
-        new ProductList().unmount();
         new Catalog().unmount();
+        new ProductList().unmount();
+        new BreadCrumbs().unmount();
         done()
       },
     })
@@ -160,11 +158,10 @@ const init = () => {
 
     }, {
       leave(done, match) {
-        console.log('leave:');
         new BreadCrumbs().unmount();
         new ProductList().unmount();
         new Catalog().unmount();
-        done()
+        done();
       },
       already(match) {
         // проверить работу
@@ -174,8 +171,33 @@ const init = () => {
     .on(`/search`, () => {
       console.log('search');
     })
-    .on(`/product/:id`, (obj) => {
+    .on(`/product/:id`, async (obj) => {
+      // /product/:id
       console.log('product obj: ', obj);
+      new Catalog().mount(new Main().element);
+      const data = await api.getProductById(obj.data.id);
+      console.log('getProductById data: ', data);
+
+      new BreadCrumbs().mount(new Main().element, [{
+        text: data.category,
+        href: `/category?slug=${data.category}`
+      },
+      {
+        text: data.title
+      }
+      ]);
+
+      new ProductCard().mount(new Main().element, data);
+      console.log('new ProductCard(): ', new ProductCard());
+
+    }, {
+      leave(done) {
+        console.log('leave product page')
+        new Catalog().unmount();
+        new BreadCrumbs().unmount();
+        new ProductCard().unmount();
+        done();
+      }
     })
     .on(`/cart`, () => {
       console.log('cart');
@@ -189,7 +211,7 @@ const init = () => {
       <div class="content" style="text-align:center;position:relative;left:50%;
       transform:translateX(-50%);padding:100px 20px;height:600px;">
       <h2 style="font-size:22px;margin-bottom:10px;">Ошибка 404.Страница не найдена:(</h2>
-     <img src="./img/robots.jpg" style="margin:15px auto;border-radius:30px;" width="400" height="400" alt="#"> 
+     <img src="/img/robots.jpg" style="margin:15px auto;border-radius:30px;" width="400" height="400" alt="#"> 
 
       <p style="font-size:18px;">Вы будете перенаправлены на <a href="/">главную страницу </a>через некоторое время</p>
       </div>

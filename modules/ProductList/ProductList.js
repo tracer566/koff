@@ -16,7 +16,6 @@ export class ProductList {
 
       // проверка
       this.isMounted = false;
-      this.addEvents();
     }
 
     return ProductList.instance;
@@ -51,6 +50,7 @@ export class ProductList {
     };
 
     parent.append(this.element);
+
     this.isMounted = true;
 
   };
@@ -61,9 +61,6 @@ export class ProductList {
     this.isMounted = false;
   };
 
-  addEvents() {
-
-  };
   updateListElem(data = []) {
     // обертка карточек
     const listElem = document.createElement('ul');

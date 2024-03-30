@@ -18,12 +18,19 @@ export class BreadCrumbs {
   mount(parent, data) {
     // console.log('kkk', Catalog);
     this.render(data);
+
     parent.append(this.element);
+    // parent.insertAdjacenElement('beforeend', this.element);
     router.updatePageLinks();
+
+    // return true;
   };
 
   unmount() {
+    console.log('Демонтаж хлебных крошек');
     this.element.remove();
+
+    // return false;
   };
 
   render(list) {
