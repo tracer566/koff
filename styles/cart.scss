@@ -218,4 +218,17 @@
       padding-bottom: 0;
     }
   }
+
+  &__empty {
+    display: block;
+    grid-column: 1/2;
+    justify-self: start;
+    width: 100%;
+    font-weight: 700;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    font-size: 19px
+  }
 }

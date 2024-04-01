@@ -13,7 +13,8 @@ import { favoriteService } from './services/StorageService.js';
 import { Pagination } from './features/Pagination/Pagination.js';
 import { BreadCrumbs } from './features/BreadCrumbs/BreadCrumbs.js';
 import { ProductCard } from './modules/ProductCard/ProductCard.js';
-import { productSlider } from './features/ProductSlider/ProductSlider.js'
+import { productSlider } from './features/ProductSlider/ProductSlider.js';
+import { Cart } from './modules/Cart/Cart.js';
 // import Swiper JS
 // import { Navigation, Thumbs } from 'swiper/modules'
 // import Swiper from 'swiper';
@@ -197,8 +198,18 @@ const init = () => {
         done();
       }
     })
-    .on(`/cart`, () => {
+    .on(`/cart`, async () => {
       console.log('cart');
+      const cartItems = await api.getCart();
+      console.log('cartItems: ', cartItems);
+      new Cart().mount(new Main().element, cartItems, 'Корзина пуста.Добавьте сюда товар');
+      console.log('new Cart(): ', new Cart());
+    }, {
+      leave(done) {
+        new Cart().unmount();
+        console.log('leave product page')
+        done();
+      }
     })
     .on(`/order`, () => {
       new Order().mount();

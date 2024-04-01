@@ -49,6 +49,7 @@ export class ApiService {
         params
       });
 
+      // data только при работе с axios
       return responce.data;
     } catch (error) {
       console.log('тут ошибка');
@@ -89,5 +90,93 @@ export class ApiService {
   async getProductById(id) {
     return await this.getData(`api/products/${id}`);
   };
+
+  /* Корзина */
+  // отправка в корзину
+  async postProductToCart(productId, quantity = 1) {
+    if (!this.accessKey) {
+      await this.getAccessKey();
+    };
+
+    try {
+      const response = await axios.post(`${this.#apiURL}api/cart/products`, {
+        productId,
+        quantity,
+      }, {
+        headers: {
+          Authorization: `Bearer ${this.accessKey}`,
+        },
+      },
+      );
+
+      // data только при работе с axios
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        this.accessKey = null;
+        this.accessKeyService.delete();
+      };
+      console.error('Ошибка сервиса корзины postProductToCart', error)
+    };
+  };
+
+  // изменение количества товара в корзине
+  async changeQuantitypostProductToCart(productId, quantity) {
+    if (!this.accessKey) {
+      await this.getAccessKey();
+    };
+
+    try {
+      const response = await axios.put(`${this.#apiURL}api/cart/products`, {
+        productId,
+        quantity,
+      }, {
+        headers: {
+          Authorization: `Bearer ${this.accessKey}`,
+        },
+      },
+      );
+
+      // data только при работе с axios
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        this.accessKey = null;
+        this.accessKeyService.delete();
+      };
+      console.error('Ошибка сервиса корзины.Функция changeQuantitypostProductToCart', error)
+    };
+  };
+
+  // получение из корзины
+  async getCart() {
+    return await this.getData('api/cart');
+  };
+
+  // удаление товара из корзины
+  async daleteProductFromCart(id) {
+    if (!this.accessKey) {
+      await this.getAccessKey();
+    };
+
+    try {
+      const response = await axios.delete(`${this.#apiURL}api/cart/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${this.accessKey}`,
+        },
+      },
+      );
+
+      // data только при работе с axios
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        this.accessKey = null;
+        this.accessKeyService.delete();
+      };
+      console.error('Ошибка сервиса корзины', error)
+    };
+  };
+
 }
 
