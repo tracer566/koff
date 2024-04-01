@@ -183,7 +183,7 @@ template {
 
 @font-face {
   font-family: Open Sans;
-  src: url(../fonts/open-sans-v36-cyrillic_latin-regular.woff2) format("woff2");
+  src: url(./fonts/open-sans-v36-cyrillic_latin-regular.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap
@@ -191,7 +191,7 @@ template {
 
 @font-face {
   font-family: Open Sans;
-  src: url(../fonts/open-sans-v36-cyrillic_latin-700.woff2) format("woff2");
+  src: url(./fonts/open-sans-v36-cyrillic_latin-700.woff2) format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap
@@ -199,7 +199,7 @@ template {
 
 @font-face {
   font-family: Inter;
-  src: url(../fonts/inter-v13-cyrillic_latin-regular.woff2) format("woff2");
+  src: url(./fonts/inter-v13-cyrillic_latin-regular.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap
@@ -281,6 +281,10 @@ fieldset {
 .visually-hidden {
   position: fixed;
   transform: scale(0)
+}
+
+input[type=search i]:enabled:read-write:-webkit-any(:focus, :hover)::-webkit-search-cancel-button {
+  display: none
 }
 
 .container {
@@ -933,6 +937,16 @@ fieldset {
   grid-area: form;
   padding-top: 30px;
   padding-bottom: 25px
+}
+
+.cart__empty {
+  display: block;
+  grid-column: 1/2;
+  justify-self: start;
+  width: 100%;
+  font-weight: 700;
+  margin: 80px auto;
+  font-size: 19px
 }
 
 .form-order {
