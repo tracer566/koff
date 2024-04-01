@@ -21,7 +21,7 @@ import { productSlider } from './features/ProductSlider/ProductSlider.js'
 // import 'swiper/css';
 
 //при заливке на гитхаб new Navigo(`/koff/dist`),создание роутера
-export const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
+export const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
 
 // инициализация
 const init = () => {
@@ -97,6 +97,9 @@ const init = () => {
         new BreadCrumbs().unmount();
         done()
       },
+      already(match) {
+        match.route.handler(match);
+      }
     })
     .on(`/favorite`, async ({ params }) => {
       new Catalog().mount(new Main().element);
@@ -117,7 +120,10 @@ const init = () => {
       new ProductList().mount(new Main().element, products, 'Избранное', 'Вы ничего не добавили в избранное:( Нажмите на сердечко на любой карточке и попробуйте снова.Для возрата на список всех товаров нажмите на логотип или на любую категорию');
       // так как функция заканивает работу до того как карточки и их ссылки создаются
       // нужно обновить,иначе перезагрузка
-      new Pagination().mount(new ProductList().containerElement).update(pagination);
+
+      if (favorite.length > 1) {
+        new Pagination().mount(new ProductList().containerElement).update(pagination);
+      };
       router.updatePageLinks();
 
     }, {
@@ -132,8 +138,33 @@ const init = () => {
         match.route.handler(match);
       }
     })
-    .on(`/search`, () => {
-      console.log('search');
+    .on(`/search`, async ({ params }) => {
+      // можно выше params:{q}
+      console.log('search params: ', params.q);
+      new Catalog().mount(new Main().element);
+      const { data: products, pagination } = await api.getProduct({
+        // передаю вбитую в поиск строку в getProduct
+        q: params.q
+      });
+
+      new BreadCrumbs().mount(new Main().element, [{ text: 'Поиск' }]);
+
+      new ProductList().mount(new Main().element, products, `Поиск:${params.q}`, `Ничего не найдено по запросу:${params.q}.
+      Подсказка для поиска:стол,стулья,диван,пуф,либо название товара`);
+
+      new Pagination().mount(new ProductList().containerElement).update(pagination);
+      router.updatePageLinks();
+
+    }, {
+      leave(done, match) {
+        new BreadCrumbs().unmount();
+        new ProductList().unmount();
+        new Catalog().unmount();
+        done();
+      },
+      already(match) {
+        match.route.handler(match);
+      }
     })
     .on(`/product/:id`, async (obj) => {
       // /product/:id

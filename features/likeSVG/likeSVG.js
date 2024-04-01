@@ -6,13 +6,19 @@
 // `
 // };
 
+// избавление от множества запросов
+let like = null;
+
 export const likeSVG = async () => {
   const likeURL = new URL('/img/like.svg', import.meta.url);
-  const responce = await fetch(likeURL);
-  const svg = await responce.text();
-  // указание формата
-  return new DOMParser()
-    .parseFromString(svg, 'image/svg+xml')
-    .querySelector("svg");
+  if (!like) {
+    const responce = await fetch(likeURL);
+    const svg = await responce.text();
+    // указание формата
+    like = new DOMParser()
+      .parseFromString(svg, 'image/svg+xml')
+      .querySelector("svg");
+  };
 
+  return like.cloneNode(true);
 };

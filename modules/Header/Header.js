@@ -4,6 +4,7 @@ import logoImg from "/img/logo.svg";
 // импорт лого как компонент
 import { Logo } from "../../features/Logo/Logo.js";
 import { likeSVG } from "../../features/likeSVG/likeSVG.js";
+import { router } from "../../main.js";
 
 export class Header {
   static instance = null;
@@ -88,6 +89,13 @@ export class Header {
 <path d="M14.6667 14.6666L13.3334 13.3333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
     `;
+
+    console.log(input);
+
+    searchForm.addEventListener('submit', e => {
+      e.preventDefault();
+      router.navigate(`/search?q=${input.value}`);
+    });
 
     searchForm.append(input, button);
 

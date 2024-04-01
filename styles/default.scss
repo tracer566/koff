@@ -101,6 +101,11 @@ fieldset {
 Чтобы контент не прижимался к краям экрана
 */
 
+// отключить крестик у формы поиска
+input[type="search" i]:enabled:read-write:-webkit-any(:focus, :hover)::-webkit-search-cancel-button {
+  display: none;
+}
+
 .container {
   max-width: 1440px;
   padding: 0 16px;

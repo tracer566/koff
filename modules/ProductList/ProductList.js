@@ -44,13 +44,15 @@ export class ProductList {
       `)
     }
 
-    // проверка
+
+    // проверка,закомментить для решения проблемы со вставкой хлебных крошек
     if (this.isMounted) {
       return;
     };
 
     parent.append(this.element);
 
+    // закомментить для решения проблемы со вставкой хлебных крошек
     this.isMounted = true;
 
   };

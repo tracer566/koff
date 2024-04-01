@@ -23,7 +23,7 @@ export class Pagination {
   update({ currentPage, totalPages, totalProducts, limit }) {
     const width = currentPage * limit;
     this.paginationBar.style.setProperty(
-      '--width', `calc(${width < totalProducts ? width : totalProducts} / ${totalProducts} * 100%)`
+      '--width', `calc(${width < totalProducts ? width : totalProducts} / (${totalProducts} * 100%))`
     )
 
     this.paginationСurrent.textContent = totalProducts === limit

@@ -11,24 +11,59 @@ export class BreadCrumbs {
       this.element = document.createElement('div');
       this.element.classList.add('breadcrumb');
       this.containerElement = addContainer(this.element);
+      // решение проблемы с хлебными крошками
+      this.isMounted = false;
     };
     return BreadCrumbs.instance;
   };
 
+  // решение проблемы с хлебными крошками
+  // проверка если текущий запрос аналогичен предыдущему,вернет true
+  checkPrevData(data) {
+    console.log('checkPrevData: ', data);
+    let isSame = false;
+    if (!this.prevData) {
+      console.log('this.prevData пришел: ', this.prevData);
+      this.prevData = data;
+    };
+
+    isSame = data.every((item, i) => {
+      return item.text === this.prevData[i].text;
+    });
+
+    return isSame;
+  };
+
   mount(parent, data) {
-    // console.log('kkk', Catalog);
+    // решение проблемы с хлебными крошками
+    // если true в чеке и элемент смонтирован-ничего не делаем
+    if (this.isMounted && this.checkPrevData(data)) {
+      console.log('this.checkPrevData: ', this.checkPrevData);
+      return;
+    };
+
+    // console.log('сюда');
+
+    // если элемент смонтирован,но запрос другой,обновление данных в крошках
+    if (this.isMounted) {
+      console.log('this.isMounted: ', this.isMounted);
+      this.render(data);
+      return;
+    }
+
+    // console.log('сюда2');
+
+    /* если элемент не смонтирован и новые данные - перерендер */
     this.render(data);
-
+    this.isMounted = true;
     parent.append(this.element);
-    // parent.insertAdjacenElement('beforeend', this.element);
     router.updatePageLinks();
-
-    // return true;
   };
 
   unmount() {
     console.log('Демонтаж хлебных крошек');
     this.element.remove();
+    this.isMounted = false;
 
     // return false;
   };
