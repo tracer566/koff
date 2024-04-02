@@ -40,7 +40,7 @@ export class ProductList {
       this.updateListElem(data);
     } else {
       this.containerElement.insertAdjacentHTML('beforeend', `
-      <p class="goods__empty" style="font-weight:700;margin:70px;font-size:19px">${emptyText || 'Произошла ошибка,нет товара или нет данных о товаре на этой странице,попробуйте еще раз:(.Для возрата на главную нажмите на логотип.Если все равно не грузится, проверьте интернет'}</p>
+      <p class="goods__empty">${emptyText || 'Произошла ошибка,нет товара или нет данных о товаре на этой странице,попробуйте еще раз:(.Для возрата на главную нажмите на логотип.Если все равно не грузится, проверьте интернет'}</p>
       `)
     }
 

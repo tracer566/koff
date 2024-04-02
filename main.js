@@ -150,14 +150,17 @@ const init = () => {
 
       new BreadCrumbs().mount(new Main().element, [{ text: 'Поиск' }]);
 
-      new ProductList().mount(new Main().element, products, `Поиск:${params.q}`, `Ничего не найдено по запросу:${params.q}.
-      Подсказка для поиска:стол,стулья,диван,пуф,либо название товара`);
+      new ProductList().mount(new Main().element, products, `Поиск:${params.q}`, `Ничего не найдено по запросу:${params.q}.Подсказка для поиска:стол,стулья,диван`);
 
-      new Pagination().mount(new ProductList().containerElement).update(pagination);
+      if (products && products.length) {
+        new Pagination().mount(new ProductList().containerElement).update(pagination);
+      };
+
       router.updatePageLinks();
 
     }, {
       leave(done, match) {
+        new Pagination().unmount();
         new BreadCrumbs().unmount();
         new ProductList().unmount();
         new Catalog().unmount();

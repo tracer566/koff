@@ -535,6 +535,13 @@ input[type=search i]:enabled:read-write:-webkit-any(:focus, :hover)::-webkit-sea
   margin-bottom: 0
 }
 
+.goods__empty {
+  font-weight: 700;
+  margin: 30px auto;
+  font-size: 19px;
+  max-width: 100%
+}
+
 .pagination {
   width: 200px;
   margin: 0 auto
