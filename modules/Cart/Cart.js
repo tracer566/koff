@@ -19,6 +19,11 @@ export class Cart {
       return;
     };
 
+    // заголовок корзины
+    const cartTitle = document.createElement('h2');
+    cartTitle.classList.add('cart__title');
+    cartTitle.textContent = 'Корзина';
+
     console.log('data from class Cart', data);
 
     // сохраняю данные
@@ -37,10 +42,6 @@ export class Cart {
 
     }
 
-    const cartTitle = document.createElement('h2');
-    cartTitle.classList.add('cart__title');
-    cartTitle.textContent = 'Корзина';
-
     this.containerElement.append(cartTitle);
 
     parent.append(this.element);
@@ -53,7 +54,25 @@ export class Cart {
   };
 
   renderProducts() {
+    const cartProductsList = document.createElement('ul');
+    cartProductsList.classList.add('cart__products');
 
+
+    /* 
+     <ul class="cart__products">
+    <li class="cart__product">
+      <img class="cart__img" src="./img/photo.jpg" alt="Кресло с подлокотниками">
+      <h3 class="cart__title-product">Кресло с подлокотниками</h3>
+      <p class="cart__price">5&nbsp;000&nbsp;₽</p>
+      <p class="cart__article">арт. 84348945757</p>
+      <div class="cart__product-control">
+        <button class="cart__product-btn">-</button>
+        <p class="cart__product-count">1</p>
+        <button class="cart__product-btn">+</button>
+      </div>
+    </li>
+  </ul>
+    */
   };
 
   renderPlace() {
