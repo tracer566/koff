@@ -12,7 +12,7 @@ const swiper2 = new Swiper(".product__slider-main", {
     nextEl: ".product__arrow_next",
     prevEl: ".product__arrow_prev",
   },
-  modules: [Navigation, Thumbs],
+  // modules: [Navigation, Thumbs],
   thumbs: {
     swiper: swiper,
   },

@@ -160,7 +160,7 @@ const init = () => {
 
     }, {
       leave(done, match) {
-        new Pagination().unmount();
+        // new Pagination().unmount();
         new BreadCrumbs().unmount();
         new ProductList().unmount();
         new Catalog().unmount();
