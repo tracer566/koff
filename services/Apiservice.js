@@ -121,7 +121,7 @@ export class ApiService {
   };
 
   // изменение количества товара в корзине
-  async changeQuantitypostProductToCart(productId, quantity) {
+  async updateQuantitypostProductToCart(productId, quantity) {
     if (!this.accessKey) {
       await this.getAccessKey();
     };

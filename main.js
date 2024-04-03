@@ -150,7 +150,7 @@ const init = () => {
 
       new BreadCrumbs().mount(new Main().element, [{ text: 'Поиск' }]);
 
-      new ProductList().mount(new Main().element, products, `Поиск:${params.q}`, `Ничего не найдено по запросу:${params.q}.Подсказка для поиска:стол,стулья,диван`);
+      new ProductList().mount(new Main().element, products, `Поиск:${params.q}`, `Ничего не найдено по запросу:${params.q || 'Отправлен пустой запрос'}.Подсказка для поиска:стол,стулья,диван`);
 
       if (products && products.length) {
         new Pagination().mount(new ProductList().containerElement).update(pagination);
@@ -210,12 +210,12 @@ const init = () => {
     }, {
       leave(done) {
         new Cart().unmount();
-        console.log('leave product page')
+        console.log('leave cart page');
         done();
       }
     })
     .on(`/order`, () => {
-      new Order().mount();
+      new Order().mount(new Main().element());
     })
     .notFound(() => {
       console.log('Ошибка 404');

@@ -20,7 +20,7 @@ export class Order {
   };
 
   // монтаж элемента
-  mount() {
+  mount(parent) {
     if (this.isMounted) {
       return;
     };
@@ -28,8 +28,7 @@ export class Order {
     const infoOrder = this.getInfo();
 
     this.containerElement.append(infoOrder);
-    const main = document.querySelector('.main');
-    main.append(this.element);
+    parent.append(this.element);
 
     // проверка
     this.isMounted = true;
