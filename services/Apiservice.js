@@ -154,7 +154,7 @@ export class ApiService {
   };
 
   // удаление товара из корзины
-  async daleteProductFromCart(id) {
+  async deleteProductFromCart(id) {
     if (!this.accessKey) {
       await this.getAccessKey();
     };
@@ -174,7 +174,7 @@ export class ApiService {
         this.accessKey = null;
         this.accessKeyService.delete();
       };
-      console.error('Ошибка сервиса корзины', error)
+      console.error('Ошибка сервиса корзины.Функция daleteProductFromCart', error)
     };
   };
 

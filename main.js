@@ -22,7 +22,7 @@ import { Cart } from './modules/Cart/Cart.js';
 // import 'swiper/css';
 
 //при заливке на гитхаб new Navigo(`/koff/dist`),создание роутера
-export const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
+export const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
 
 // инициализация
 const init = () => {

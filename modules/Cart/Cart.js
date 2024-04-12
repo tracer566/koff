@@ -38,8 +38,7 @@ export class Cart {
     // сохраняю данные
     this.cartData = data;
 
-
-    // проверка что данные в корзину есть
+    // проверка что данные в корзине есть
     if (data.products && data.products.length) {
       this.renderProducts(data.products);
       this.renderPlace();
@@ -66,7 +65,7 @@ export class Cart {
     // console.log('id, quantity: ', id, quantity);
     // console.log('Обновление корзины');
     if (quantity === 0) {
-      new ApiService().daleteProductFromCart(id);
+      new ApiService().deleteProductFromCart(id);
       this.cartData.products = this.cartData.products.filter(product => product.id !== id);
     } else {
       // запрашиваю новые товары
@@ -148,7 +147,6 @@ export class Cart {
           if (listElem.quantity === 0) {
             let question = confirm('Удалить товар из корзины?');
             if (question) {
-
               cartElem.remove();
               this.debUpdateCart(listElem.id, listElem.quantity);
               return;
