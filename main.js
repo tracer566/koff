@@ -22,7 +22,7 @@ import { Cart } from './modules/Cart/Cart.js';
 // import 'swiper/css';
 
 //при заливке на гитхаб new Navigo(`/koff/dist`),создание роутера
-export const router = new Navigo(`/koff/dist`, { linksSelector: `a[href^="/"]` });
+export const router = new Navigo(`/`, { linksSelector: `a[href^="/"]` });
 
 // инициализация
 const init = () => {
@@ -212,11 +212,26 @@ const init = () => {
         new Cart().unmount();
         console.log('leave cart page');
         done();
-      }
-    })
-    .on(`/order`, () => {
-      new Order().mount(new Main().element());
-    })
+      },
+    },
+    )
+    .on(`/order/:id`, ({ data: { id } }) => {
+      console.log(`order:${id}`);
+
+      api.getOrder(id).then(data => {
+        console.log('order data from main.js', data);
+      });
+
+      new Order().mount(new Main().element);
+    },
+      {
+        leave(done) {
+          new Order().unmount();
+          console.log('leave order page');
+          done();
+        },
+      },
+    )
     .notFound(() => {
       console.log('Ошибка 404');
       new Main().element.innerHTML = `
@@ -242,6 +257,11 @@ const init = () => {
       });
 
   router.resolve();
+
+  api.getCart().then(data => {
+    new Header().changeCount(data.totalCount);
+    console.log('data.totalCount: ', data);
+  });
 };
 
 init();

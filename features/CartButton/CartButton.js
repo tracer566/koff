@@ -19,10 +19,10 @@ export class CartButton {
     btn.dataset.id = id;
     btn.textContent = this.text;
 
-    btn.addEventListener('click', () => {
-      n++;
-      new ApiService().postProductToCart(id);
-      new Header().changeCount(n);
+    btn.addEventListener('click', async () => {
+      const { totalCount } = await new ApiService().postProductToCart(id);
+      // console.log('data из кнопки Добавить в корзину: ', data);
+      new Header().changeCount(totalCount);
     });
 
     return btn;

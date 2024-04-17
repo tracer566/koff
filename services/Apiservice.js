@@ -121,7 +121,7 @@ export class ApiService {
   };
 
   // изменение количества товара в корзине
-  async updateQuantitypostProductToCart(productId, quantity) {
+  async updateQuantityProductToCart(productId, quantity) {
     if (!this.accessKey) {
       await this.getAccessKey();
     };
@@ -176,6 +176,40 @@ export class ApiService {
       };
       console.error('Ошибка сервиса корзины.Функция daleteProductFromCart', error)
     };
+  };
+
+
+  // отправка заказа через форму в корзине
+  async postOrder(data) {
+    if (!this.accessKey) {
+      await this.getAccessKey();
+    };
+
+    try {
+      const response = await axios.post(`${this.#apiURL}api/orders`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${this.accessKey}`,
+          },
+        },
+      );
+
+      // data только при работе с axios
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        this.accessKey = null;
+        this.accessKeyService.delete();
+      };
+      console.error('Ошибка сервиса postOrder', error)
+    };
+  };
+
+  // получение данных после отправки заказв
+  async getOrder(id) {
+    return await this.getData(`api/orders/${id}`);
+
   };
 
 }

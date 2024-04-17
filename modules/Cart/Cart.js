@@ -2,6 +2,7 @@ import { addContainer } from '../addContainer.js';
 import { API_URL } from '../../const.js';
 import { ApiService } from '../../services/Apiservice.js';
 import { debounce } from '../../debounce.js';
+import { router } from '../../main.js';
 
 export class Cart {
   static instance = null;
@@ -60,7 +61,7 @@ export class Cart {
     this.isMounted = false;
   };
 
-  // обновление корзины
+  // обновление корзины,отправляет на сервер данные о том какие товары и их количество
   updateCart(id, quantity) {
     // console.log('id, quantity: ', id, quantity);
     // console.log('Обновление корзины');
@@ -69,7 +70,7 @@ export class Cart {
       this.cartData.products = this.cartData.products.filter(product => product.id !== id);
     } else {
       // запрашиваю новые товары
-      new ApiService().updateQuantitypostProductToCart(id, quantity);
+      new ApiService().updateQuantityProductToCart(id, quantity);
       this.cartData.products.forEach(product => {
         if (product.id === id) {
           product.quantity = quantity;
@@ -246,15 +247,16 @@ export class Cart {
     inputName.classList.add('form-order__input');
     inputName.placeholder = 'Фамилия Имя Отчество';
     inputName.type = 'text';
-    inputName.name = 'text';
+    inputName.name = 'name';
     inputName.required = 'true';
 
     const inputPhone = document.createElement('input');
     inputPhone.classList.add('form-order__input');
     inputPhone.placeholder = 'Телефон';
     inputPhone.type = 'tel';
-    inputPhone.name = 'tel';
+    inputPhone.name = 'phone';
     inputPhone.required = 'true';
+    inputPhone.minLength = '10';
 
     const inputEmail = document.createElement('input');
     inputEmail.classList.add('form-order__input');
@@ -267,7 +269,7 @@ export class Cart {
     inputAddress.classList.add('form-order__input');
     inputAddress.placeholder = 'Адрес доставки';
     inputAddress.type = 'text';
-    inputAddress.name = 'text';
+    inputAddress.name = 'address';
 
     const textarea = document.createElement('textarea');
     textarea.classList.add('form-order__textarea');
@@ -279,40 +281,131 @@ export class Cart {
     // fieldset с радио
     const formFieldsetRadioDelivery = document.createElement('fieldset');
     formFieldsetRadioDelivery.className = 'form-order__fieldset form-order__fieldset_radio';
-    formFieldsetRadioDelivery.innerHTML = `
-         <legend class="form-order__legend">Доставка</legend>
-      <label class="form-order__label radio">
-        <input class="radio__input" required type="radio" name="deliveryType" value="delivery">
-        Доставка
-      </label>
 
-      <label class="form-order__label radio">
-        <input class="radio__input" required type="radio" name="deliveryType" value="pickup">
-        Самовывоз
-      </label>
-    `;
+    // заголовок
+    const deliveryLegend = document.createElement('legend');
+    deliveryLegend.classList.add('form-order__legend');
+    deliveryLegend.textContent = 'Доставка';
 
-    // fieldset с радио
+    // 1-й label
+    const labelDelivery = document.createElement('label');
+    labelDelivery.classList.add('form-order__label', 'radio');
+    const labelDeliveryText = document.createTextNode('Доставка');
+
+    const inputDelivery = document.createElement('input');
+    inputDelivery.classList.add('radio__input');
+    inputDelivery.required = 'true';
+    inputDelivery.type = 'radio';
+    inputDelivery.name = 'deliveryType';
+    inputDelivery.value = 'delivery';
+
+    // собираю 1-ый
+    labelDelivery.append(inputDelivery, labelDeliveryText)
+
+    // 2-ой label
+    const labelPickup = document.createElement('label');
+    labelPickup.classList.add('form-order__label', 'radio');
+
+    const labelPickupText = document.createTextNode('Самовывоз');
+    const inputPickup = document.createElement('input');
+    inputPickup.classList.add('radio__input');
+    inputPickup.required = 'true';
+    inputPickup.type = 'radio';
+    inputPickup.name = 'deliveryType';
+    inputPickup.value = 'pickup';
+
+    // собираю 2-ой
+    labelPickup.append(inputPickup, labelPickupText);
+
+    // собираю 1-й набор радиокнопок
+    formFieldsetRadioDelivery.append(deliveryLegend, labelDelivery, labelPickup);
+
+    // блокирую поле адреса если выбран самовывоз
+    formFieldsetRadioDelivery.addEventListener('change', e => {
+      if (e.target === inputDelivery) {
+        inputAddress.disabled = false;
+        inputAddress.style.opacity = '1';
+        inputAddress.style.backgroundColor = '#EEEFF2';
+        inputAddress.placeholder = 'Адрес доставки';
+      } else {
+        inputAddress.disabled = true;
+        inputAddress.value = '';
+        inputAddress.style.opacity = '0.8';
+        inputAddress.style.backgroundColor = '#322F2F';
+        inputAddress.placeholder = '';
+      }
+    });
+
+    // 2-ой fieldset с радио
     const formFieldsetRadioPay = document.createElement('fieldset');
     formFieldsetRadioPay.className = 'form-order__fieldset form-order__fieldset_radio';
-    formFieldsetRadioPay.innerHTML = `
-       <legend class="form-order__legend">Оплата</legend>
-      <label class="form-order__label radio">
-        <input class="radio__input" required type="radio" name="paymentType" value="card">
-        Картой при получении
-      </label>
 
-      <label class="form-order__label radio">
-        <input class="radio__input" required type="radio" name="paymentType" value="cash">
-        Наличными при получении
-      </label>
-    `;
+    // заголовок
+    const PayCardLegend = document.createElement('legend');
+    PayCardLegend.classList.add('form-order__legend');
+    PayCardLegend.textContent = 'Оплата';
+
+    // 1-й label
+    const labelPayCard = document.createElement('label');
+    labelPayCard.classList.add('form-order__label', 'radio');
+    const labelPayCardText = document.createTextNode('Картой при получении');
+
+    const inputPayCard = document.createElement('input');
+    inputPayCard.classList.add('radio__input');
+    inputPayCard.required = 'true';
+    inputPayCard.type = 'radio';
+    inputPayCard.name = 'paymentType';
+    inputPayCard.value = 'card';
+
+    // собираю 1-ый
+    labelPayCard.append(inputPayCard, labelPayCardText)
+
+    // 2-ой label
+    const labelPayCash = document.createElement('label');
+    labelPayCash.classList.add('form-order__label', 'radio');
+
+    const labelPayCashText = document.createTextNode('Наличными при получении');
+    const inputPayCash = document.createElement('input');
+    inputPayCash.classList.add('radio__input');
+    inputPayCash.required = 'true';
+    inputPayCash.type = 'radio';
+    inputPayCash.name = 'paymentType';
+    inputPayCash.value = 'cash';
+
+    // собираю 2-ой
+    labelPayCash.append(inputPayCash, labelPayCashText);
+
+    // собираю 2-й набор радиокнопок
+    formFieldsetRadioPay.append(PayCardLegend, labelPayCard, labelPayCash);
+
+
+    // formFieldsetRadioPay.innerHTML = `
+    //    <legend class="form-order__legend">Оплата</legend>
+    //   <label class="form-order__label radio">
+    //     <input class="radio__input" required type="radio" name="paymentType" value="card">
+    //     Картой при получении
+    //   </label>
+
+    //   <label class="form-order__label radio">
+    //     <input class="radio__input" required type="radio" name="paymentType" value="cash">
+    //     Наличными при получении
+    //   </label>
+    // `;
 
     cartForm.append(formTitle, formFieldsetInput, formFieldsetRadioDelivery, formFieldsetRadioPay);
-    cartForm.addEventListener('submit', e => {
+
+    cartForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      console.log('Отправка заказа');
+      const data = Object.fromEntries(new FormData(cartForm));
+      console.log('Отправка данных из формы Object.fromEntries data: ', data);
+
+      const result = await new ApiService().postOrder(data);
+      console.log('result: ', result);
+
+      router.navigate(`/order/${result.orderId}`);
+
     });
+
     this.containerElement.append(cartForm);
 
   };
