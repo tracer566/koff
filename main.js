@@ -46,7 +46,7 @@ const init = () => {
 
   router
     .on(`/`, async () => {
-      new Catalog().mount(new Main().element);
+      (await new Catalog().mount(new Main().element)).setActiveLink('ляля');
       const products = await api.getProduct({ limit: 18 });
       console.log('Получил product на главной: ', products);
       new ProductList().mount(new Main().element, products, 'Список всех товаров');
@@ -73,7 +73,7 @@ const init = () => {
     })
     .on(`/category`, async ({ params: { slug, page = 1 } }) => {
       // console.log('obj params category: ', obj.params.slug);
-      new Catalog().mount(new Main().element);
+      (await new Catalog().mount(new Main().element)).setActiveLink(slug);
       // 1 вариант
       // const product = await api.getProduct({ category: slug });
       // 2 вариант
@@ -82,7 +82,6 @@ const init = () => {
 
       new BreadCrumbs().mount(new Main().element, [{ text: slug }]);
       new ProductList().mount(new Main().element, products, slug);
-
 
       new Pagination()
         .mount(new ProductList().containerElement)
@@ -220,13 +219,13 @@ const init = () => {
 
       api.getOrder(id).then(data => {
         console.log('order data from main.js', data);
+        new Order().mount(new Main().element, data);
       });
-
-      new Order().mount(new Main().element);
     },
       {
         leave(done) {
           new Order().unmount();
+          new Header().changeCount(0);
           console.log('leave order page');
           done();
         },
@@ -238,7 +237,7 @@ const init = () => {
       <div class="content" style="text-align:center;position:relative;left:50%;
       transform:translateX(-50%);padding:100px 20px;height:600px;">
       <h2 style="font-size:22px;margin-bottom:10px;">Ошибка 404.Страница не найдена:(</h2>
-     <img src="/img/robots.jpg" style="margin:15px auto;border-radius:30px;" width="400" height="400" alt="#"> 
+     <img src="/img/robots.jpg" style="margin:15px auto;border-radius:30px;" width="400" height="400" alt="Картинка робота"> 
 
       <p style="font-size:18px;">Вы будете перенаправлены на <a href="/">главную страницу </a>через некоторое время</p>
       </div>

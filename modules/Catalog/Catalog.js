@@ -11,7 +11,8 @@ export class Catalog {
 
       this.element = document.createElement('nav');
       this.element.classList.add('catalog');
-      this.containerElement = addContainer(this.element, "catalog__container")
+      this.containerElement = addContainer(this.element, "catalog__container");
+      this.linksList = [];
       // console.log('this.containerElement catalog: ', this.containerElement);
 
       // проверка
@@ -32,7 +33,7 @@ export class Catalog {
   async mount(parent) {
 
     if (this.isMounted) {
-      return;
+      return this;
     };
 
     if (!this.catalogData) {
@@ -44,7 +45,7 @@ export class Catalog {
 
     // проверка
     this.isMounted = true;
-
+    return this;
   };
 
   // демонтаж элемента
@@ -61,19 +62,47 @@ export class Catalog {
     catalogList.classList.add('catalog__list');
 
     const catalogItems = data.map(item => {
-      return `
-      <li class="catalog__item">
-        <a class="catalog__link" href="/category?slug=${item}&page=1">${item}</a>
-        </li>
-      `;
+      const listElem = document.createElement('li');
+      listElem.classList.add('catalog__item');
+
+      const link = document.createElement('a');
+      this.linksList.push(link);
+      link.classList.add('catalog__link');
+      link.href = `/category?slug=${item}&page=1`;
+      link.textContent = `${item}`;
+
+      listElem.append(link);
+
+      return listElem;
+
+      // return `
+      // <li class="catalog__item">
+      //   <a class="catalog__link" href="">${item}</a>
+      //   </li>
+      // `;
+
     });
 
     // console.log('[...catalogItems]', [...catalogItems].join(''));
-    catalogList.insertAdjacentHTML('beforeend', [...catalogItems].join(''));
+    // catalogList.insertAdjacentHTML('beforeend', [...catalogItems].join(''));
+    catalogList.append(...catalogItems)
 
     this.containerElement.append(catalogList);
 
   };
+
+  setActiveLink(slug) {
+    // debugger;
+    const encodedSlug = encodeURIComponent(slug);
+    this.linksList.forEach(link => {
+      const linkSlug = new URL(link.href).searchParams.get('slug');
+      if (encodeURIComponent(linkSlug) == encodedSlug) {
+        link.classList.add('catalog__link_active');
+      } else {
+        link.classList.remove('catalog__link_active');
+      }
+    });
+  }
 
 };
 

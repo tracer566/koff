@@ -163,7 +163,7 @@ export class Header {
     return control;
   }
 
-  changeCount(n) {
+  changeCount(n = 0) {
     this.countElement.textContent = `(${n})`;
   }
 

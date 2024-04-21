@@ -20,12 +20,12 @@ export class Order {
   };
 
   // монтаж элемента
-  mount(parent) {
+  mount(parent, data) {
     if (this.isMounted) {
       return;
     };
 
-    const infoOrder = this.getInfo();
+    const infoOrder = this.getInfo(data);
 
     this.containerElement.append(infoOrder);
     parent.append(this.element);
@@ -41,7 +41,8 @@ export class Order {
     this.isMounted = false;
   }
 
-  getInfo() {
+  getInfo(data) {
+    console.log('getInfo order data: ', data);
     const info = document.createElement('div');
     info.className = 'order__info';
     const btn = document.createElement('button');
@@ -49,39 +50,53 @@ export class Order {
     btn.type = 'submit';
     btn.textContent = 'На главную';
 
+    let card;
+    if (data.paymentType === 'card') {
+      card = 'Оплата картой при получении';
+    } else {
+      card = 'Оплата наличными';
+    };
+
+    let delivery;
+    if (data.deliveryType === "delivery") {
+      delivery = 'Доставка по указанному адресу'
+    } else {
+      delivery = 'Самовывоз';
+    }
+
     info.insertAdjacentHTML('beforeend', `
          <div class="order__head">
           <h2 class="order__title">Заказ успешно размещен</h2>      
-        <p class="order__price">20&nbsp;000&nbsp;₽</p>
+        <p class="order__price">${(data.totalPrice).toLocaleString()}&nbsp;₽</p>
         </div>
-        <p class="order__number">№43435</p>
+        <p class="order__number">№${data.id}</p>
 
         <div class="order__data">
           <h3 class="order__data-title">Данные доставки</h3>
         <table class="order__data-table table">
         <tr class="table__row">
         <td class="table__field">Получатель</td>
-        <td class="table__value">Иванов Петр Александрович</td>
+        <td class="table__value">${data.name}</td>
         </tr>
         <tr class="table__row">
         <td class="table__field">Телефон</td>
-        <td class="table__value">+7 (737) 346 23 00</td>
+        <td class="table__value">${data.phone}</td>
         </tr>
         <tr class="table__row">
         <td class="table__field">E-mail</td>
-        <td class="table__value">Ivanov84@gmail.com</td>
+        <td class="table__value">${data.email}</td>
         </tr>
         <tr class="table__row">
         <td class="table__field">Адрес доставки</td>
-        <td class="table__value">Москва, ул. Ленина, 21, кв. 33</td>
+        <td class="table__value">${data.address}</td>
         </tr>
         <tr class="table__row">
         <td class="table__field">Способ оплаты</td>
-        <td class="table__value">Картой при получении</td>
+        <td class="table__value">${card}</td>
         </tr>
         <tr class="table__row">
         <td class="table__field">Способ получения</td>
-        <td class="table__value">Доставка</td>
+        <td class="table__value">${delivery}</td>
         </tr>
         </table>
         </div>

@@ -3,6 +3,7 @@ import { API_URL } from '../../const.js';
 import { ApiService } from '../../services/Apiservice.js';
 import { debounce } from '../../debounce.js';
 import { router } from '../../main.js';
+import { Header } from '../Header/Header.js';
 
 export class Cart {
   static instance = null;
@@ -68,6 +69,13 @@ export class Cart {
     if (quantity === 0) {
       new ApiService().deleteProductFromCart(id);
       this.cartData.products = this.cartData.products.filter(product => product.id !== id);
+      new Header().changeCount(this.cartData.products.length);
+      // проверка что корзина не пуста
+      if (!this.cartData.products.length) {
+        this.containerElement.innerHTML = `
+        <p class="cart__empty">Корзина теперь пуста.Добавьте сюда товар</p>
+        `
+      }
     } else {
       // запрашиваю новые товары
       new ApiService().updateQuantityProductToCart(id, quantity);
